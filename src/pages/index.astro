@@ -1,6 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { client } from '../lib/microcms';
+import type { BlogResponse } from '../lib/microcms';
+
+// SSGなのでサーバーサイドで実行
+const data = await client.get<BlogResponse>({
+  endpoint: 'articles',
+  queries: {
+    orders: '-publishedAt',
+    limit: 100,
+  },
+});
+console.log(data);
 ---
+
+<script>
+</script>
 
 <BaseLayout title="Dig and Build">
   <h1>Dig and Build</h1>

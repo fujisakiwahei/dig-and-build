@@ -27,3 +27,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 - `<style>`タグでSCSS書ける！Astro
 - `src/components/Header.astro`みたいにコンポーネント使って他所からよびだしできる。
 - 動的ルーティングもNuxtと一緒！わかりやすい。`src/pages/areas/[prefecture]/[area].astro`など。
+- microCMSはAstro専用のモジュールなし。SDKを使った。`npm install microcms-js-sdk`
+  - [https://zenn.dev/nishina__n/articles/1b97195b79f1df]を参考に。
+  - Blogの方とかクライアントを作るメソッドなどがSDKに入っているみたい。
+  - SCKの`createClient`に、envから環境変数を読み取って使っている。
+
+  ```ts
+  export const client = createClient({
+    serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
+    apiKey: import.meta.env.MICROCMS_API_KEY,
+  });
+  ```
+
+- フロントマター（.astroファイル冒頭の`___{contents}___`）に書いたJSはサーバーサイドで実行される。一方、Scriptタグで書いたらクライアントサイドで実行される。
