@@ -41,8 +41,8 @@
 ## 4. 基本レイアウト
 
 - [x] BaseLayoutを作成する
-- [ ] Headerを作成する
-- [ ] Footerを作成する
+- [x] Headerを作成する
+- [x] Footerを作成する
 
 ---
 

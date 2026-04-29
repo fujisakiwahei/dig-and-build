@@ -1,0 +1,141 @@
+---
+const { href = "/contact/" } = Astro.props;
+---
+
+<a class="contact-cta" href={href} aria-labelledby="contact-cta-heading">
+  <div class="contact-cta__inner">
+    <div class="contact-cta__text">
+      <h2 id="contact-cta-heading" class="contact-cta__heading">
+        取材・広告のご依頼
+      </h2>
+      <p class="contact-cta__lead">
+        都市と建築をめぐる取材依頼、特集タイアップのご相談、
+        広告掲載のお問い合わせはこちらから承ります。
+      </p>
+    </div>
+
+    <div class="contact-cta__action">
+      <span class="contact-cta__pill">
+        <span class="contact-cta__pill-label">CONTACT</span>
+        <span class="contact-cta__pill-arrow" aria-hidden="true">→</span>
+      </span>
+    </div>
+  </div>
+</a>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .contact-cta {
+    position: relative;
+    display: block;
+    padding: 80px $gutter;
+    color: $color-engi-ink;
+    text-decoration: none;
+    background-color: $color-engi;
+    overflow: hidden;
+    transition: background-color $dur-2 $ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(
+        rgba(245, 238, 230, 0.04) 0.6px,
+        transparent 0.6px
+      );
+      background-size: $paper-noise-size;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background-color: $color-engi-hover;
+    }
+  }
+
+  .contact-cta__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: $space-7;
+    align-items: center;
+    max-width: $content-wide;
+    margin: 0 auto;
+  }
+
+  .contact-cta__heading {
+    margin: 0 0 16px;
+    font-family: $font-serif;
+    font-size: clamp(26px, 3vw, 36px);
+    font-weight: 500;
+    line-height: 1.3;
+    color: $color-engi-ink;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-cta__lead {
+    max-width: 440px;
+    margin: 0;
+    font-family: $font-serif;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: $color-engi-ink-2;
+    letter-spacing: 0.04em;
+  }
+
+  .contact-cta__action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .contact-cta__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-4;
+    padding: 20px 36px;
+    font-family: $font-display;
+    font-size: 13px;
+    font-weight: 500;
+    color: $color-engi;
+    background-color: $color-engi-ink;
+    border-radius: 0;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    box-shadow: $shadow-engi-lift;
+    transition: border-radius 300ms ease-in-out;
+  }
+
+  .contact-cta:hover .contact-cta__pill {
+    border-radius: 30px;
+  }
+
+  .contact-cta:active .contact-cta__pill {
+    box-shadow: $shadow-engi-press;
+  }
+
+  .contact-cta__pill-arrow {
+    font-family: $font-serif;
+  }
+
+  @media (max-width: 768px) {
+    .contact-cta {
+      padding: 56px $gutter;
+    }
+
+    .contact-cta__inner {
+      grid-template-columns: 1fr;
+      gap: $space-6;
+    }
+
+    .contact-cta__action {
+      justify-content: flex-start;
+    }
+
+    .contact-cta__pill {
+      padding: 16px 28px;
+      font-size: 12.5px;
+    }
+  }
+</style>

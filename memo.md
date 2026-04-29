@@ -26,3 +26,4 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 - `<style>`タグでSCSS書ける！Astro
 - `src/components/Header.astro`みたいにコンポーネント使って他所からよびだしできる。
+- 動的ルーティングもNuxtと一緒！わかりやすい。`src/pages/areas/[prefecture]/[area].astro`など。

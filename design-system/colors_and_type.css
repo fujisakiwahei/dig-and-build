@@ -6,73 +6,55 @@
 
 :root {
   /* ---------- Paper / neutral palette ---------------------- */
-  --color-bg:        #f5eee6;  /* warm reddish paper            */
-  --color-bg-soft:   #f0e7dc;  /* card / sub-surface            */
-  --color-bg-deep:   #e9dccc;  /* recessed area, table stripe   */
-  --color-text:      #1f1f1f;  /* body ink                      */
-  --color-muted:     #7a736b;  /* metadata, captions            */
-  --color-border:    #e2d9cf;  /* hairline rules                */
-  --color-accent:    #3a3937;  /* heading ink, slightly softer  */
+  --color-bg: #f5eee6; /* warm reddish paper            */
+  --color-bg-soft: #f0e7dc; /* card / sub-surface            */
+  --color-bg-deep: #e9dccc; /* recessed area, table stripe   */
+  --color-text: #1f1f1f; /* body ink                      */
+  --color-muted: #7a736b; /* metadata, captions            */
+  --color-border: #e2d9cf; /* hairline rules                */
+  --color-accent: #3a3937; /* heading ink, slightly softer  */
 
   /* ---------- Engi (エンジ色) — used on contact/footer ----- */
   /* "Engi-iro" is a traditional Japanese deep crimson-brown.
      This is the brand's expressive register: footers, full-bleed
      contact bands, primary CTAs. Never on body content. */
-  --color-engi:        #6b1f24;  /* base. matte, library-bound  */
-  --color-engi-deep:   #4f161a;  /* shadow / hover              */
-  --color-engi-soft:   #7d2a30;  /* hover lift                  */
-  --color-engi-ink:    #f5eee6;  /* paper-on-engi text          */
-  --color-engi-ink-2:  rgba(245, 238, 230, 0.62); /* secondary  */
-  --color-engi-rule:   rgba(245, 238, 230, 0.18); /* hairline   */
-  --color-engi-glow:   rgba(245, 238, 230, 0.05); /* highlight  */
+  --color-engi: #6b1f24; /* base. matte, library-bound  */
+  --color-engi-deep: #4f161a; /* shadow / hover              */
+  --color-engi-soft: #7d2a30; /* hover lift                  */
+  --color-engi-ink: #f5eee6; /* paper-on-engi text          */
+  --color-engi-ink-2: rgba(245, 238, 230, 0.62); /* secondary  */
+  --color-engi-rule: rgba(245, 238, 230, 0.18); /* hairline   */
+  --color-engi-glow: rgba(245, 238, 230, 0.05); /* highlight  */
 
   /* ---------- Semantic foreground ------------------------- */
-  --fg-1: var(--color-text);     /* primary body                */
-  --fg-2: var(--color-accent);   /* headings                    */
-  --fg-3: var(--color-muted);    /* metadata                    */
+  --fg-1: var(--color-text); /* primary body                */
+  --fg-2: var(--color-accent); /* headings                    */
+  --fg-3: var(--color-muted); /* metadata                    */
   --fg-on-engi: var(--color-engi-ink);
 
   /* ---------- Type families ------------------------------- */
   /* System-font-first: render with no webfont download.
      Hiragino Mincho ProN is preferred (macOS / iOS); Yu Mincho on Windows. */
-  --font-serif:
-    "Hiragino Mincho ProN",
-    "HiraMinProN-W3",
-    "Yu Mincho",
-    "YuMincho",
-    "游明朝",
-    "游明朝体",
-    serif;
+  --font-serif: "Hiragino Mincho ProN", "HiraMinProN-W3", "Yu Mincho", "YuMincho", "游明朝", "游明朝体", serif;
 
-  --font-sans:
-    -apple-system,
-    "Hiragino Kaku Gothic ProN",
-    "Yu Gothic",
-    "游ゴシック",
-    system-ui,
-    sans-serif;
+  --font-sans: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "游ゴシック", system-ui, sans-serif;
 
-  --font-display:
-    "Cormorant Garamond",
-    "Hiragino Mincho ProN",
-    "Yu Mincho",
-    "游明朝",
-    serif;  /* Latin display headings */
+  --font-display: "Cormorant Garamond", "Hiragino Mincho ProN", "Yu Mincho", "游明朝", serif; /* Latin display headings */
 
   /* ---------- Type scale (editorial, not UI) -------------- */
-  --fs-display:   clamp(2.4rem, 4.8vw, 4.0rem);  /* hero        */
-  --fs-h1:        clamp(1.9rem, 3.0vw, 2.6rem);  /* page title  */
-  --fs-h2:        clamp(1.4rem, 2.0vw, 1.75rem); /* section     */
-  --fs-h3:        1.15rem;
-  --fs-body:      1rem;          /* 16px                        */
-  --fs-small:     0.875rem;
-  --fs-meta:      0.78rem;       /* dates, tags                 */
+  --fs-display: clamp(2.4rem, 4.8vw, 4rem); /* hero        */
+  --fs-h1: clamp(1.9rem, 3vw, 2.6rem); /* page title  */
+  --fs-h2: clamp(1.4rem, 2vw, 1.75rem); /* section     */
+  --fs-h3: 1.15rem;
+  --fs-body: 1rem; /* 16px                        */
+  --fs-small: 0.875rem;
+  --fs-meta: 0.78rem; /* dates, tags                 */
 
-  --lh-tight:     1.25;
-  --lh-body:      1.9;            /* generous reading rhythm    */
-  --lh-ui:        1.5;
-  --tracking:     0.03em;         /* slightly open in JP        */
-  --tracking-eyebrow: 0.18em;     /* en-eyebrow caps            */
+  --lh-tight: 1.25;
+  --lh-body: 1.9; /* generous reading rhythm    */
+  --lh-ui: 1.5;
+  --tracking: 0.03em; /* slightly open in JP        */
+  --tracking-eyebrow: 0.18em; /* en-eyebrow caps            */
 
   /* ---------- Spacing (editorial 4-step) ------------------ */
   --space-1: 4px;
@@ -87,20 +69,18 @@
   --space-10: 128px;
 
   /* ---------- Layout -------------------------------------- */
-  --content-max:   720px;   /* main editorial column           */
-  --content-wide:  1080px;  /* card grids                      */
-  --gutter:        clamp(20px, 4vw, 40px);
+  --content-max: 720px; /* main editorial column           */
+  --content-wide: 1080px; /* card grids                      */
+  --gutter: clamp(20px, 4vw, 40px);
 
   /* ---------- Radius / shadow / motion -------------------- */
-  --radius-0: 0px;          /* default — paper has no radius   */
-  --radius-1: 2px;          /* subtle pill ends                */
-  --radius-2: 999px;        /* fully round (CTA capsule)       */
+  --radius-0: 0px; /* default — paper has no radius   */
+  --radius-1: 2px; /* subtle pill ends                */
+  --radius-2: 999px; /* fully round (CTA capsule)       */
 
-  --shadow-paper: 0 1px 0 rgba(31,31,31,0.04);
-  --shadow-engi-press: inset 0 0 0 1px rgba(245,238,230,0.12);
-  --shadow-engi-lift:
-    0 1px 0 rgba(245,238,230,0.10) inset,
-    0 24px 48px -24px rgba(31,15,15,0.55);
+  --shadow-paper: 0 1px 0 rgba(31, 31, 31, 0.04);
+  --shadow-engi-press: inset 0 0 0 1px rgba(245, 238, 230, 0.12);
+  --shadow-engi-lift: 0 1px 0 rgba(245, 238, 230, 0.1) inset, 0 24px 48px -24px rgba(31, 15, 15, 0.55);
 
   --ease: cubic-bezier(0.32, 0.72, 0.24, 1);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -109,8 +89,7 @@
   --dur-3: 480ms;
 
   /* ---------- Paper texture (subtle dot field) ------------ */
-  --paper-noise:
-    radial-gradient(rgba(0, 0, 0, 0.035) 0.6px, transparent 0.6px);
+  --paper-noise: radial-gradient(rgba(0, 0, 0, 0.035) 0.6px, transparent 0.6px);
   --paper-noise-size: 4px 4px;
 }
 
@@ -118,7 +97,9 @@
    Base / typographic resets
    ============================================================ */
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
@@ -135,7 +116,12 @@ body {
 }
 
 /* Headings — slightly softer ink, as if printed on paper */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--fg-2);
   font-family: var(--font-serif);
   font-weight: 500;
@@ -145,11 +131,20 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: pretty;
 }
 
-h1 { font-size: var(--fs-h1); }
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
+h1 {
+  font-size: var(--fs-h1);
+}
+h2 {
+  font-size: var(--fs-h2);
+}
+h3 {
+  font-size: var(--fs-h3);
+}
 
-p  { margin: 0 0 1.2em; text-wrap: pretty; }
+p {
+  margin: 0 0 1.2em;
+  text-wrap: pretty;
+}
 
 /* Quiet links: read first, click second */
 a {
@@ -160,7 +155,9 @@ a {
   text-decoration-color: var(--color-border);
   transition: text-decoration-color var(--dur-1) var(--ease);
 }
-a:hover { text-decoration-color: var(--color-engi); }
+a:hover {
+  text-decoration-color: var(--color-engi);
+}
 
 /* Eyebrow: small, tracked, sans — the only place we use UI sans */
 .eyebrow {
@@ -216,16 +213,21 @@ hr,
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
+  background-image: radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
   background-size: 4px 4px;
   pointer-events: none;
 }
 .engi-band h1,
 .engi-band h2,
 .engi-band h3,
-.engi-band a { color: var(--fg-on-engi); }
+.engi-band a {
+  color: var(--fg-on-engi);
+}
 .engi-band .eyebrow,
 .engi-band .datestamp,
-.engi-band .tag { color: var(--color-engi-ink-2); }
-.engi-band hr { background: var(--color-engi-rule); }
+.engi-band .tag {
+  color: var(--color-engi-ink-2);
+}
+.engi-band hr {
+  background: var(--color-engi-rule);
+}

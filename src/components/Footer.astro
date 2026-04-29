@@ -139,7 +139,9 @@ const year = new Date().getFullYear();
   .site-footer__panel {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    gap: $space-6;
     min-height: 460px;
     padding: 36px 28px;
     color: $color-engi-ink;
@@ -148,12 +150,19 @@ const year = new Date().getFullYear();
     transition: background-color $dur-1 $ease;
 
     &:hover {
-      background-color: $color-engi-glow;
+      background-color: $color-engi;
+
+      .site-footer__panel-circle {
+        background-color: #fff;
+
+        svg {
+          color: $color-engi;
+        }
+      }
     }
   }
 
   .site-footer__panel-vertical {
-    align-self: flex-end;
     font-family: $font-serif;
     font-size: 38px;
     font-weight: 500;
@@ -164,7 +173,9 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__panel-foot {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .site-footer__panel-desc {
@@ -175,6 +186,7 @@ const year = new Date().getFullYear();
     line-height: 1.85;
     color: $color-engi-ink-2;
     letter-spacing: 0.04em;
+    text-align: center;
   }
 
   .site-footer__panel-circle {
@@ -186,6 +198,7 @@ const year = new Date().getFullYear();
     color: $color-engi-ink;
     border: 1px solid $color-engi-ink-2;
     border-radius: 50%;
+    transition: background-color $dur-1 $ease;
   }
 
   @media (max-width: 768px) {
