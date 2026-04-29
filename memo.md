@@ -24,4 +24,5 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 ```
 
-- `<style>`タグでSCSSかける！Astro
+- `<style>`タグでSCSS書ける！Astro
+- `src/components/Header.astro`みたいにコンポーネント使って他所からよびだしできる。
