@@ -1,60 +1,46 @@
 ## 1. 初期セットアップ
 
 - [x] pnpmでAstroプロジェクトを作成する
-- [ ] TypeScriptを有効化する
-- [ ] ESLintを導入する
+- [x] TypeScriptを有効化する
+- [x] ESLintを導入する
 - [ ] Prettierを導入する
-- [ ] Vitestを導入する
-- [ ] Playwrightを導入する
-- [ ] Sassを導入する（`pnpm add -D sass`）
-- [ ] Stylelintを導入する
+- [x] Vitestを導入する
+- [x] Playwrightを導入する(Claude CodeとMCPで実行することに。)
+- [x] Sassを導入する（`pnpm add -D sass`）
+- [x] Stylelintを導入する
   - `pnpm add -D stylelint stylelint-config-standard-scss stylelint-order`
-- [ ] `.env` を作成する
+- [x] `.env` を作成する
 - [ ] Vercel用の環境変数を整理する
 
 ---
 
 ## 2. SCSS / デザイン基盤
 
-- [ ] `src/styles/global.scss` を作成する
-- [ ] BaseLayoutで `global.scss` を読み込む
-- [ ] CSSをSCSSに移行する
+- [x] `src/styles/global.scss` を作成する
+- [x] BaseLayoutで `global.scss` を読み込む
+- [x] CSSをSCSSに移行する
 
-- [ ] SCSS構成を作成する
+- [x] SCSS構成を作成する
 
-  src/styles/
-  global.scss
-  foundation/
-  \_tokens.scss
-  \_base.scss
-  \_typography.scss
-  components/
-  \_header.scss
-  \_footer.scss
-  \_article.scss
-  \_archive.scss
-
-- [ ] デザイントークンを実装する（色・フォント）
-- [ ] 赤みのある紙背景をCSSで実装する
-- [ ] 明朝ベースのタイポグラフィを適用する
+- [x] デザイントークンを実装する（色・フォント）
 
 ---
 
 ## 3. microCMS設計
 
-- [ ] `articles` APIを作成する
-- [ ] `prefectures` APIを作成する
-- [ ] `areas` APIを作成する
-- [ ] `categories` APIを作成する
-- [ ] `authors` APIを作成する
-- [ ] サンプルデータを登録する
-- [ ] `isFeatured` を設定する
+- [x] `articles` APIを作成する
+- [x] `prefectures` APIを作成する
+- [x] `areas` APIを作成する
+- [x] `categories` APIを作成する
+- [x] `authors` APIを作成する
+- [x] サンプルデータを登録する
+- [x] `isFeatured` を設定する
 
 ---
 
 ## 4. 基本レイアウト
 
-- [ ] BaseLayoutを作成する
+- [x] BaseLayoutを作成する
 - [ ] Headerを作成する
 - [ ] Footerを作成する
 

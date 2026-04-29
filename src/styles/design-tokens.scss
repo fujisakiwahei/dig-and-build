@@ -1,0 +1,92 @@
+// ============================================================
+// Dig & Build — Design Tokens
+// 「少し赤みのある紙に、静かに組まれた都市の記録」
+// A quiet city chronicle, set on slightly-red paper.
+// ============================================================
+
+// ---------- Paper / neutral palette ------------------------
+$color-bg: #f5eee6; // warm reddish paper
+$color-bg-soft: #f0e7dc; // card / sub-surface
+$color-bg-deep: #e9dccc; // recessed area, table stripe
+$color-text: #1f1f1f; // body ink
+$color-muted: #7a736b; // metadata, captions
+$color-border: #e2d9cf; // hairline rules
+$color-accent: #3a3937; // heading ink, slightly softer
+
+// ---------- Engi (エンジ色) — contact band / footer --------
+// 伝統色「臙脂色」。ブランドの強い register。本文には使わない。
+$color-engi: #6b1f24; // base. matte, library-bound
+$color-engi-deep: #4f161a; // shadow / hover
+$color-engi-soft: #7d2a30; // hover lift
+$color-engi-footer: #2a0c10; // very dark wine — footer bg
+$color-engi-ink: #f5eee6; // paper-on-engi text
+$color-engi-ink-2: rgba(245, 238, 230, 0.62); // secondary
+$color-engi-rule: rgba(245, 238, 230, 0.18); // hairline
+$color-engi-glow: rgba(245, 238, 230, 0.05); // highlight
+
+// ---------- Semantic foreground ----------------------------
+$fg-1: $color-text; // primary body
+$fg-2: $color-accent; // headings
+$fg-3: $color-muted; // metadata
+$fg-on-engi: $color-engi-ink;
+
+// ---------- Type families ----------------------------------
+// System-font-first. Hiragino Mincho ProN > Yu Mincho fallback.
+$font-serif: "Hiragino Mincho ProN", "HiraMinProN-W3", "Yu Mincho", "YuMincho", "游明朝", "游明朝体", serif;
+
+$font-sans: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "游ゴシック", system-ui, sans-serif;
+
+$font-display: "Cormorant Garamond", "Hiragino Mincho ProN", "Yu Mincho", "游明朝", serif;
+
+// ---------- Type scale (editorial, not UI) -----------------
+$fs-display: clamp(2.4rem, 4.8vw, 4rem); // hero
+$fs-h1: clamp(1.9rem, 3vw, 2.6rem); // page title
+$fs-h2: clamp(1.4rem, 2vw, 1.75rem); // section
+$fs-h3: 1.15rem;
+$fs-body: 1rem; // 16px
+$fs-small: 0.875rem;
+$fs-meta: 0.78rem; // dates, tags
+
+$lh-tight: 1.25;
+$lh-body: 1.9; // generous reading rhythm
+$lh-ui: 1.5;
+$tracking: 0.03em; // slightly open in JP
+$tracking-eyebrow: 0.18em;
+
+// ---------- Spacing (editorial 4-step) ---------------------
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+$space-9: 96px;
+$space-10: 128px;
+
+// ---------- Layout -----------------------------------------
+$content-max: 720px; // main editorial column
+$content-wide: 1080px; // card grids
+$gutter: clamp(20px, 4vw, 40px);
+
+// ---------- Radius / shadow / motion -----------------------
+$radius-0: 0px; // default — paper has no radius
+$radius-1: 2px; // subtle pill ends
+$radius-2: 999px; // fully round (CTA capsule)
+
+$shadow-paper: 0 1px 0 rgba(31, 31, 31, 0.04);
+$shadow-engi-press: inset 0 0 0 1px rgba(245, 238, 230, 0.12);
+$shadow-engi-lift:
+  0 1px 0 rgba(245, 238, 230, 0.1) inset,
+  0 24px 48px -24px rgba(31, 15, 15, 0.55);
+
+$ease: cubic-bezier(0.32, 0.72, 0.24, 1);
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$dur-1: 160ms;
+$dur-2: 280ms;
+$dur-3: 480ms;
+
+// ---------- Paper texture (subtle dot field) ---------------
+$paper-noise: radial-gradient(rgba(0, 0, 0, 0.035) 0.6px, transparent 0.6px);
+$paper-noise-size: 4px 4px;

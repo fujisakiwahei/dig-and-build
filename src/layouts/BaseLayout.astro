@@ -1,0 +1,22 @@
+---
+
+import '../styles/reset.scss';
+import '../styles/design-tokens.scss';
+
+const { title = 'Dig and Build' } = Astro.props;
+
+---
+
+<!doctype html>
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html

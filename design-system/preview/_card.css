@@ -1,0 +1,51 @@
+/* Shared shell for preview cards. Each card is ~700px wide,
+   variable height. The card itself is borderless — the
+   Design System tab provides the framing. We just paint the
+   paper field and place the specimen. */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap");
+@import url("../colors_and_type.css");
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+.card {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px 32px;
+  background: var(--color-bg);
+  background-image: var(--paper-noise);
+  background-size: var(--paper-noise-size);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card.engi {
+  background: var(--color-engi);
+  color: var(--fg-on-engi);
+  background-image:
+    radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.engi .label { color: var(--color-engi-ink-2); }
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}

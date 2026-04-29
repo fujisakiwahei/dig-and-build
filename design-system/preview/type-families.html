@@ -1,0 +1,33 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{height:100%}
+  body{margin:0;padding:24px 36px;box-sizing:border-box;display:flex;align-items:center}
+  .col{display:grid;grid-template-columns:120px 1fr;gap:14px 24px;width:100%;align-items:baseline}
+  .tag{font-family:var(--font-sans);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--fg-3)}
+  .sample{font-size:14px;line-height:1.6}
+  .serif{font-family:var(--font-serif);color:var(--fg-1)}
+  .sans{font-family:var(--font-sans);color:var(--fg-1)}
+  .display{font-family:"Cormorant Garamond",serif;color:var(--fg-2);letter-spacing:0.18em;text-transform:uppercase;font-size:18px;font-weight:400}
+  .meta{font-family:var(--font-sans);font-size:10px;color:var(--fg-3);letter-spacing:0.04em;margin-top:2px}
+</style></head><body>
+<div class="col">
+  <div class="tag">serif (body)</div>
+  <div>
+    <div class="sample serif">ヒラギノ明朝 ProN — 紙の本のような読み心地。</div>
+    <div class="meta">Hiragino Mincho ProN → Yu Mincho → 游明朝 (system fonts)</div>
+  </div>
+  <div class="tag">sans (ui)</div>
+  <div>
+    <div class="sample sans">ヒラギノ角ゴ ProN — 補助・メタ情報のみ</div>
+    <div class="meta">system → Hiragino Kaku Gothic ProN → Yu Gothic</div>
+  </div>
+  <div class="tag">latin display</div>
+  <div>
+    <div class="display">DIG &amp; BUILD &nbsp; · &nbsp; FEATURED</div>
+    <div class="meta">Cormorant Garamond — wordmark &amp; eyebrow caps only</div>
+  </div>
+</div>
+</body></html>

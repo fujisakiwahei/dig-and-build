@@ -1,0 +1,18 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{height:100%}
+  body{margin:0;padding:0;display:flex}
+  .pane{flex:1;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;letter-spacing:0.1em;text-transform:uppercase;font-size:13px;position:relative}
+  .a{background:#f5eee6;background-image:radial-gradient(rgba(0,0,0,0.035) 0.6px,transparent 0.6px);background-size:4px 4px;color:#7a736b}
+  .b{background:#f0e7dc;background-image:radial-gradient(rgba(0,0,0,0.045) 0.7px,transparent 0.7px);background-size:5px 5px;color:#7a736b}
+  .c{background:#6b1f24;color:rgba(245,238,230,0.62)}
+  .c::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(245,238,230,0.04) 0.6px,transparent 0.6px);background-size:4px 4px;pointer-events:none}
+  .label{position:relative;z-index:1}
+</style></head><body>
+<div class="pane a"><span class="label">paper · 4px noise</span></div>
+<div class="pane b"><span class="label">soft · 5px noise</span></div>
+<div class="pane c"><span class="label">engi · paper-noise echo</span></div>
+</body></html>

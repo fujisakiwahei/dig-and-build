@@ -1,0 +1,31 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{height:100%}
+  body{margin:0;padding:24px 36px;box-sizing:border-box;display:flex;align-items:center}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;width:100%}
+  .item{display:flex;flex-direction:column;gap:10px}
+  .demo{height:64px;display:flex;align-items:center;justify-content:center;background:#f0e7dc;color:#3a3937;font-family:var(--font-sans);font-size:11px;letter-spacing:0.12em}
+  .label{font-family:var(--font-sans);font-size:10px;color:var(--fg-3);letter-spacing:0.12em;text-transform:uppercase}
+  .meta{font-family:var(--font-sans);font-size:10px;color:var(--fg-3)}
+</style></head><body>
+<div class="grid">
+  <div class="item">
+    <div class="demo" style="border-radius:0px">PAPER</div>
+    <div class="label">radius-0</div>
+    <div class="meta">0px — default. paper has no radius.</div>
+  </div>
+  <div class="item">
+    <div class="demo" style="border-radius:2px">DETAIL</div>
+    <div class="label">radius-1</div>
+    <div class="meta">2px — barely-there pill ends.</div>
+  </div>
+  <div class="item">
+    <div class="demo" style="background:#6b1f24;color:#f5eee6;border-radius:999px;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:0.2em">CONTACT →</div>
+    <div class="label">radius-2 / capsule</div>
+    <div class="meta">999px — reserved for engi CTA.</div>
+  </div>
+</div>
+</body></html>
