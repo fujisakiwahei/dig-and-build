@@ -103,14 +103,17 @@ const currentPath = Astro.url.pathname;
     line-height: 1.2;
     color: $color-engi-ink;
     background-color: $color-engi;
+    border-radius: 0;
     letter-spacing: 0.08em;
     text-decoration: none;
     transition:
       background-color $dur-1 $ease,
+      border-radius 300ms ease-in-out,
       box-shadow $dur-1 $ease;
 
     &:hover {
       background-color: $color-engi-soft;
+      border-radius: 20px;
     }
 
     &:active {
