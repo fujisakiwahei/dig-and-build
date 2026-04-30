@@ -13,29 +13,13 @@ const href = `/articles/${article.slug}/`;
 
 <a class:list={["article-card", `article-card--${layout}`]} href={href}>
   <div class="article-card__thumb">
-    {
-      article.eyecatch ? (
-        <img
-          src={article.eyecatch.url}
-          alt=""
-          loading="lazy"
-          width={article.eyecatch.width}
-          height={article.eyecatch.height}
-        />
-      ) : (
-        <div class="article-card__thumb-placeholder" aria-hidden="true" />
-      )
-    }
+    {article.eyecatch ? <img src={article.eyecatch.url} alt="" loading="lazy" width={article.eyecatch.width} height={article.eyecatch.height} /> : <div class="article-card__thumb-placeholder" aria-hidden="true" />}
   </div>
 
   <div class="article-card__body">
     <ArticleMeta article={article} />
     <h3 class="article-card__title">{article.title}</h3>
-    {
-      article.description && (
-        <p class="article-card__excerpt">{article.description}</p>
-      )
-    }
+    {article.description && <p class="article-card__excerpt">{article.description}</p>}
   </div>
 </a>
 
@@ -50,14 +34,17 @@ const href = `/articles/${article.slug}/`;
 
     @media (hover: hover) {
       &:hover {
-        .article-card__thumb{
+        .article-card__thumb {
           border-radius: 0 12px 12px 12px;
 
-          img{
+          img {
             transform: scale(1.1);
           }
         }
 
+        .article-card__title {
+          color: $color-engi;
+        }
       }
     }
   }
@@ -93,10 +80,11 @@ const href = `/articles/${article.slug}/`;
     margin: 10px 0 0;
     font-family: $font-serif;
     font-size: 17px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5;
     color: $color-accent;
     letter-spacing: 0.04em;
+    transition: color $dur-2 $ease;
   }
 
   .article-card__excerpt {

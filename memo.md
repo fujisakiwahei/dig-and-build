@@ -46,7 +46,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ## microCMS
 
 - microCMSでは、WordPressのように`-1`で記事数を指定できない。上限が100。
+- webhookめっちゃ簡単だった。以下の手順で、記事の保存時にvercelの再ビルドを行うように設定。（SSGなので必要）
+
+```txt
+1. Vercelで対象プロジェクトを開く
+2. Settings → Git → Deploy Hooks を開く
+3. Hook名を入力する
+    例：microcms
+4. 対象ブランチを選ぶ
+    例：main
+5. Create Hook を押す
+6. 発行されたDeploy Hook URLをコピーする
+7. microCMS管理画面で対象APIを開く
+8. API設定 → Webhook → 追加
+9. 連携先に Vercel を選ぶ
+10. VercelのDeploy Hook URLを貼り付ける
+11. 通知タイミングを設定して保存
+```
 
 ## JSの仕様
 
 - `slice(0, 8)`にすると、8投稿目まで取られる。イメージとしては、8でカットするから7まで使う感じで排他。
+
+## ネットワーク・インフラ
+
+- おなまえ.comでドメインをとって、ネームサーバをVercelに向ける運用。レンタルサーバは借りておらず、メールなども使う予定がないので。

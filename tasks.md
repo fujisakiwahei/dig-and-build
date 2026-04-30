@@ -48,42 +48,63 @@
 
 ## 5. コンポーネント
 
-- [x]
+- [x] 記事カードを作成する
+- [x] 記事グリッドを作成する
+- [x] 記事メタ情報を作成する
+- [x] フィーチャー記事を作成する
+- [x] ページヒーローを作成する
+- [x] ページタイトルを作成する
+- [x] カテゴリーリストを作成する
+- [x] エリアリストを作成する
+- [x] サイドバー用カテゴリーリストを作成する
+- [x] サイドバー用エリアリストを作成する
+- [x] ページネーションを作成する
+- [x] 問い合わせCTAを作成する
 
 ---
 
 ## 6. ページ実装
 
-- [ ] トップページ `/` を作成する
-- [ ] 記事詳細 `/articles/[slug]/` を作成する
-- [ ] カテゴリー `/categories/[slug]/` を作成する
+- [x] トップページ `/` を作成する
+- [x] 記事一覧 `/articles/page/` を作成する
+- [x] 記事詳細 `/articles/[slug]/` を作成する
+- [x] カテゴリー一覧 `/categories/` を作成する
+- [x] カテゴリー `/categories/[category]/` を作成する
 - [ ] 都道府県 `/prefectures/[slug]/` を作成する
-- [ ] エリア `/areas/[prefecture]/[area]/` を作成する
+- [x] エリア一覧 `/areas/` を作成する
+- [x] エリア `/areas/[prefecture]/[area]/` を作成する
 - [ ] 著者 `/authors/[slug]/` を作成する
 - [ ] About `/about/` を作成する
 - [ ] Contact `/contact/` を作成する
 - [ ] Advertise `/advertise/` を作成する
-- [ ] Privacy Policy `/privacy-policy/` を作成する
-- [ ] 404ページを作成する
+- [x] Privacy Policy `/privacy-policy/` を作成する
+- [x] 404ページを作成する
+- [x] 記事詳細ページのデザイン調整を反映する
+  - タイトルサイズ調整
+  - 地域ラベルの表示調整
+  - description / separator / blockquote / list / link / share文言調整
 
 ---
 
 ## 7. microCMS接続
 
-- [ ] microCMSクライアントを作成する
-- [ ] 記事一覧取得を実装する
-- [ ] 記事詳細取得を実装する
-- [ ] 各マスタ取得（categories, areas, prefectures, authors）
-- [ ] getStaticPathsを実装する
-- [ ] SSGで全ページ生成を確認する
+- [x] microCMSクライアントを作成する
+- [x] 記事一覧取得を実装する
+- [x] 記事詳細取得を実装する
+- [x] 各マスタ取得（categories, areas, prefectures）
+- [ ] authors取得を利用するページを実装する
+- [x] getStaticPathsを実装する
+- [x] SSGで全ページ生成を確認する
 
 ---
 
 ## 8. 画像最適化
 
+- [ ] microCMS画像URLのクエリ調整方針を決める
+  - `w`, `h`, `fit`, `fm`, `q` などで軽量化できるか確認する
 - [ ] 画像URL生成関数を作成する
-- [ ] 一覧画像を軽量化する
-- [ ] 詳細画像を最適化する
+- [ ] 一覧画像をクエリ調整で軽量化する
+- [ ] 詳細画像をクエリ調整で最適化する
 - [ ] WebP / AVIF対応を検討する
 - [ ] OGP画像を設定する
 
@@ -147,7 +168,7 @@
 - [ ] sitemap生成
 - [ ] robots.txt作成
 - [ ] Search Console設定
-- [ ] プライバシーポリシー整備
+- [x] プライバシーポリシー整備
 
 ---
 
@@ -157,7 +178,7 @@
 - [ ] Vercel連携
 - [ ] 環境変数設定
 - [ ] Preview確認
-- [ ] 本番デプロイ
+- [x] 本番デプロイ
 - [ ] 独自ドメイン接続
 - [ ] PageSpeed確認
 
