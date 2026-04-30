@@ -1,0 +1,73 @@
+---
+import type { Article } from "../lib/microcms";
+import { formatDate } from "../lib/microcms";
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+const area = article.area?.[0];
+const prefecture = area?.prefecture?.[0];
+const category = article.category;
+---
+
+<div class="article-meta">
+  {
+    area && (
+      <span class="article-meta__badge">
+        {prefecture?.name && (
+          <span class="article-meta__badge-pref">{prefecture.name} /</span>
+        )}
+        <span class="article-meta__badge-area">{area.name}</span>
+      </span>
+    )
+  }
+  {category && <span class="article-meta__category">#{category.name}</span>}
+  <span class="article-meta__date">{formatDate(article.publishedAt)}</span>
+</div>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    font-family: $font-serif;
+    font-size: 12px;
+    color: $color-muted;
+    letter-spacing: 0.04em;
+  }
+
+  .article-meta__badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: $color-engi-ink;
+    background-color: $color-engi;
+    letter-spacing: 0.06em;
+  }
+
+  .article-meta__badge-pref {
+    font-size: 0.78em;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+
+  .article-meta__category {
+    color: $color-text;
+  }
+
+  .article-meta__date {
+    font-family: $font-sans;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+</style>

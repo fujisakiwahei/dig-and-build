@@ -48,13 +48,7 @@
 
 ## 5. コンポーネント
 
-- [ ] FeaturedArticleを作成する
-- [ ] ArticleListを作成する
-- [ ] ArticleMetaを作成する
-- [ ] CategoryListを作成する
-- [ ] AreaListを作成する
-- [ ] TableOfContentsを作成する
-- [ ] EyecatchImageを作成する
+- [x]
 
 ---
 

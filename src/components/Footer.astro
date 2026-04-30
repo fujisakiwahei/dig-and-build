@@ -1,8 +1,7 @@
 ---
 const rows = [
-  { href: "/categories/", label: "カテゴリー" },
-  { href: "/areas/", label: "エリア" },
-  { href: "/advertise/", label: "広告掲載・タイアップ" },
+  { href: "/categories/", label: "カテゴリー一覧" },
+  { href: "/areas/", label: "エリア一覧" },
   { href: "/privacy-policy/", label: "プライバシーポリシー" },
 ];
 
@@ -30,23 +29,12 @@ const year = new Date().getFullYear();
       <p class="site-footer__copy">© {year} DIG &amp; BUILD</p>
     </div>
 
-    <a class="site-footer__panel" href="/contact/">
-      <span class="site-footer__panel-vertical">お問い合わせ</span>
+    <a class="site-footer__panel" target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3umoJiZbq6xWw/edit?hl=ja">
+      <span class="site-footer__panel-vertical">問い合わせる</span>
       <span class="site-footer__panel-foot">
-        <span class="site-footer__panel-desc">
-          取材のご依頼、特集タイアップのご相談、
-          広告掲載のお問い合わせはこちらから。
-        </span>
+        <span class="site-footer__panel-desc"> 取材のご依頼、特集タイアップのご相談、 広告掲載のお問い合わせはこちらから。</span>
         <span class="site-footer__panel-circle" aria-hidden="true">
-          <svg
-            width="36"
-            height="14"
-            viewBox="0 0 36 14"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-            stroke-linecap="square"
-          >
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square">
             <line x1="0" y1="7" x2="34" y2="7"></line>
             <polyline points="28,1 34,7 28,13"></polyline>
           </svg>
@@ -70,10 +58,7 @@ const year = new Date().getFullYear();
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(
-        rgba(245, 238, 230, 0.04) 0.6px,
-        transparent 0.6px
-      );
+      background-image: radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
       background-size: $paper-noise-size;
       pointer-events: none;
     }

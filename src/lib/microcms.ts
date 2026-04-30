@@ -13,24 +13,68 @@ export const client = createClient({
   apiKey: import.meta.env.MICROCMS_API_KEY,
 });
 
-export type Blog = {
+export type Eyecatch = {
+  url: string;
+  height: number;
+  width: number;
+};
+
+export type Prefecture = {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+  name: string;
+  slug: string;
+};
+
+export type Area = {
+  id: string;
+  name: string;
+  slug: string;
+  prefecture: Prefecture[];
+};
+
+export type Category = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type Author = {
+  id: string;
+  name: string;
+  slug: string;
+  bio?: string;
+  avatar?: Eyecatch;
+  xUrl?: string;
+  igUrl?: string;
+  websiteUrl?: string;
+};
+
+export type Article = {
+  id: string;
   publishedAt: string;
   revisedAt: string;
   title: string;
-  content: string;
-  thumbnail?: {
-    url: string;
-    height: number;
-    width: number;
-  };
+  slug: string;
+  description: string;
+  body: string;
+  eyecatch?: Eyecatch;
+  isFeatured: boolean;
+  area: Area[];
+  category: Category;
+  author?: Author;
 };
 
-export type BlogResponse = {
-  contents: Blog[];
+export type ListResponse<T> = {
+  contents: T[];
   totalCount: number;
   offset: number;
   limit: number;
 };
+
+export function formatDate(iso: string): string {
+  const d = new Date(iso);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}.${mm}.${dd}`;
+}

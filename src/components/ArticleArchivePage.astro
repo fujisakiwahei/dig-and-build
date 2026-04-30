@@ -1,0 +1,86 @@
+---
+import type { Article, Area, Category, ListResponse, Prefecture } from "../lib/microcms";
+import { client } from "../lib/microcms";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleGrid from "./ArticleGrid.astro";
+import SidebarCategoryList from "./SidebarCategoryList.astro";
+import SidebarAreaList from "./SidebarAreaList.astro";
+import Pagination from "./Pagination.astro";
+
+interface Props {
+  articles: Article[];
+  currentPage: number;
+  lastPage: number;
+}
+
+const { articles, currentPage, lastPage } = Astro.props;
+
+const categories = await client.get<ListResponse<Category>>({
+  endpoint: "categories",
+  queries: { orders: "order", limit: 100 },
+});
+
+const prefectures = await client.get<ListResponse<Prefecture>>({
+  endpoint: "prefectures",
+  queries: { orders: "order", limit: 100 },
+});
+
+const areas = await client.get<ListResponse<Area>>({
+  endpoint: "areas",
+  queries: { orders: "order", limit: 100 },
+});
+
+const hasSidebar =
+  categories.contents.length > 0 ||
+  (prefectures.contents.length > 0 && areas.contents.length > 0);
+const hasMain = articles.length > 0;
+const articlePageHref = (n: number) => (n === 1 ? "/articles/page/" : `/articles/page/${n}/`);
+---
+
+<BaseLayout title="記事一覧 | Dig and Build">
+  {
+    (hasMain || hasSidebar) && (
+      <div class="home-layout">
+        {hasSidebar && (
+          <aside class="home-layout__sidebar">
+            {categories.contents.length > 0 && (
+              <SidebarCategoryList categories={categories.contents} />
+            )}
+            {prefectures.contents.length > 0 && areas.contents.length > 0 && (
+              <SidebarAreaList
+                prefectures={prefectures.contents}
+                areas={areas.contents}
+              />
+            )}
+          </aside>
+        )}
+        {hasMain && (
+          <div class="home-layout__main">
+            <ArticleGrid articles={articles} heading="記事一覧" />
+            {lastPage > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                lastPage={lastPage}
+                hrefBuilder={articlePageHref}
+              />
+            )}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  {!hasMain && <p class="articles-list__empty">記事はまだありません。</p>}
+</BaseLayout>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .articles-list__empty {
+    margin: 0;
+    padding: $space-7 0;
+    color: $color-muted;
+    font-family: $font-serif;
+    text-align: center;
+  }
+</style>

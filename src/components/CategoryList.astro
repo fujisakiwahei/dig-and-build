@@ -1,0 +1,80 @@
+---
+import type { Category } from "../lib/microcms";
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+---
+
+<section class="category-list">
+  <div class="category-list__inner">
+    <div class="category-list__label">【 カテゴリー 】</div>
+    <div class="category-list__row">
+      {
+        categories.map((category, i) => (
+          <>
+            <a class="category-list__link" href={`/categories/${category.slug}/`}>
+              {category.name}
+            </a>
+            {i < categories.length - 1 && (
+              <span class="category-list__sep" aria-hidden="true">
+                ·
+              </span>
+            )}
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .category-list {
+    width: 100%;
+  }
+
+  .category-list__inner {
+    max-width: $content-wide;
+    margin: 0 auto;
+    padding: $space-7 $gutter $space-8;
+  }
+
+  .category-list__label {
+    margin-bottom: 18px;
+    font-family: $font-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.14em;
+  }
+
+  .category-list__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    padding-bottom: 28px;
+    font-family: $font-serif;
+    font-size: 17px;
+    color: $color-text;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .category-list__link {
+    color: $color-text;
+    text-decoration: none;
+    transition: color $dur-1 $ease;
+
+    &:hover {
+      color: $color-engi;
+    }
+  }
+
+  .category-list__sep {
+    color: $color-border;
+  }
+</style>

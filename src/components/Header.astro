@@ -1,9 +1,8 @@
 ---
 const navItems = [
-  { href: "/articles/", label: "記事一覧" },
-  { href: "/categories/", label: "カテゴリー一覧" },
-  { href: "/areas/", label: "エリア一覧" },
-  { href: "/about/", label: "このメディアについて" },
+  { href: "/articles/page/", label: "記事一覧", activePrefix: "/articles/" },
+  { href: "/categories/", label: "カテゴリー一覧", activePrefix: "/categories/" },
+  { href: "/areas/", label: "エリア一覧", activePrefix: "/areas/" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -11,21 +10,13 @@ const currentPath = Astro.url.pathname;
 
 <header class="site-header">
   <nav class="site-header__nav" aria-label="グローバルナビゲーション">
-    <a class="site-header__wordmark" href="/" aria-label="Dig & Build トップへ">
-      DIG &amp; BUILD
-    </a>
+    <a class="site-header__wordmark" href="/" aria-label="Dig & Build トップへ"> DIG &amp; BUILD </a>
 
     <ul class="site-header__links">
       {
         navItems.map((item) => (
           <li>
-            <a
-              href={item.href}
-              class:list={[
-                "site-header__link",
-                currentPath.startsWith(item.href) && "is-active",
-              ]}
-            >
+            <a href={item.href} class:list={["site-header__link", currentPath.startsWith(item.activePrefix) && "is-active"]}>
               {item.label}
             </a>
           </li>
@@ -33,7 +24,7 @@ const currentPath = Astro.url.pathname;
       }
     </ul>
 
-    <a class="site-header__cta" href="/contact/">問い合わせる</a>
+    <a class="site-header__cta" target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3umoJiZbq6xWw/edit?hl=ja">問い合わせる</a>
   </nav>
 </header>
 
@@ -41,8 +32,11 @@ const currentPath = Astro.url.pathname;
   @use "../styles/design-tokens.scss" as *;
 
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     width: 100%;
-    background-color: $color-bg;
+    background-color: $color-bg-soft;
   }
 
   .site-header__nav {
@@ -50,8 +44,6 @@ const currentPath = Astro.url.pathname;
     align-items: baseline;
     justify-content: space-between;
     gap: $space-5;
-    max-width: $content-wide;
-    margin: 0 auto;
     padding: 28px $gutter 18px;
     border-bottom: 1px solid $color-border;
   }
@@ -61,8 +53,7 @@ const currentPath = Astro.url.pathname;
     font-family: $font-display;
     font-size: 22px;
     font-weight: 400;
-    color: $color-accent;
-    letter-spacing: 0.22em;
+    color: $color-engi;
     text-decoration: none;
     white-space: nowrap;
   }

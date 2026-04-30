@@ -1,0 +1,29 @@
+---
+import { client } from "../../lib/microcms";
+import type { Area, Prefecture, ListResponse } from "../../lib/microcms";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import AreaList from "../../components/AreaList.astro";
+import heroImg from "../../images/hero/areas.webp";
+
+const prefectures = await client.get<ListResponse<Prefecture>>({
+  endpoint: "prefectures",
+  queries: {
+    orders: "order",
+    limit: 100,
+  },
+});
+
+const areas = await client.get<ListResponse<Area>>({
+  endpoint: "areas",
+  queries: {
+    orders: "order",
+    limit: 100,
+  },
+});
+---
+
+<BaseLayout title="エリア一覧 | Dig and Build">
+  <PageHero title="エリア一覧" image={heroImg} alt="" />
+  {prefectures.contents.length > 0 && areas.contents.length > 0 && <AreaList prefectures={prefectures.contents} areas={areas.contents} />}
+</BaseLayout>

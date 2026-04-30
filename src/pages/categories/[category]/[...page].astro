@@ -1,13 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { client } from "../../src/lib/microcms";
-import type { Article, Area, Category, ListResponse, Prefecture } from "../../src/lib/microcms";
-import BaseLayout from "../../src/layouts/BaseLayout.astro";
-import PageTitle from "../../src/components/PageTitle.astro";
-import ArticleGrid from "../../src/components/ArticleGrid.astro";
-import SidebarCategoryList from "../../src/components/SidebarCategoryList.astro";
-import SidebarAreaList from "../../src/components/SidebarAreaList.astro";
-import Pagination from "../../src/components/Pagination.astro";
+import { client } from "../../../lib/microcms";
+import type {
+  Article,
+  Area,
+  Category,
+  ListResponse,
+  Prefecture,
+} from "../../../lib/microcms";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageTitle from "../../../components/PageTitle.astro";
+import ArticleGrid from "../../../components/ArticleGrid.astro";
+import SidebarCategoryList from "../../../components/SidebarCategoryList.astro";
+import SidebarAreaList from "../../../components/SidebarAreaList.astro";
+import Pagination from "../../../components/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const cats = await client.get<ListResponse<Category>>({
@@ -27,7 +33,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         },
       });
       return paginate(res.contents, {
-        params: { slug: cat.slug },
+        params: { category: cat.slug },
         props: { categoryName: cat.name },
         pageSize: 18,
       });
@@ -40,7 +46,7 @@ const { page, categoryName } = Astro.props as {
   page: import("astro").Page<Article>;
   categoryName: string;
 };
-const { slug } = Astro.params;
+const { category } = Astro.params;
 
 const categories = await client.get<ListResponse<Category>>({
   endpoint: "categories",
@@ -57,10 +63,13 @@ const areas = await client.get<ListResponse<Area>>({
   queries: { orders: "order", limit: 100 },
 });
 
-const hasSidebar = categories.contents.length > 0 || (prefectures.contents.length > 0 && areas.contents.length > 0);
+const hasSidebar =
+  categories.contents.length > 0 ||
+  (prefectures.contents.length > 0 && areas.contents.length > 0);
 const hasMain = page.data.length > 0;
 
-const hrefBuilder = (n: number) => (n === 1 ? `/categories/${slug}` : `/categories/${slug}/${n}`);
+const hrefBuilder = (n: number) =>
+  n === 1 ? `/categories/${category}` : `/categories/${category}/${n}`;
 ---
 
 <BaseLayout title={`カテゴリ/${categoryName} | Dig and Build`}>
@@ -68,14 +77,27 @@ const hrefBuilder = (n: number) => (n === 1 ? `/categories/${slug}` : `/categori
     {
       hasSidebar && (
         <aside class="home-layout__sidebar">
-          {categories.contents.length > 0 && <SidebarCategoryList categories={categories.contents} />}
-          {prefectures.contents.length > 0 && areas.contents.length > 0 && <SidebarAreaList prefectures={prefectures.contents} areas={areas.contents} />}
+          {categories.contents.length > 0 && (
+            <SidebarCategoryList categories={categories.contents} />
+          )}
+          {prefectures.contents.length > 0 && areas.contents.length > 0 && (
+            <SidebarAreaList
+              prefectures={prefectures.contents}
+              areas={areas.contents}
+            />
+          )}
         </aside>
       )
     }
     <div class="home-layout__main">
       <PageTitle prefix="カテゴリ" name={categoryName} />
-      {hasMain ? <ArticleGrid articles={page.data} /> : <p class="articles-list__empty">記事はまだありません。</p>}
+      {
+        hasMain ? (
+          <ArticleGrid articles={page.data} />
+        ) : (
+          <p class="articles-list__empty">記事はまだありません。</p>
+        )
+      }
       {page.lastPage > 1 && <Pagination page={page} hrefBuilder={hrefBuilder} />}
     </div>
   </div>

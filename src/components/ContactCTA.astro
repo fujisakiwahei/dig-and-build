@@ -1,22 +1,17 @@
 ---
-const { href = "/contact/" } = Astro.props;
+const { href = "https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3umoJiZbq6xWw/edit?hl=ja" } = Astro.props;
 ---
 
-<a class="contact-cta" href={href} aria-labelledby="contact-cta-heading">
+<a class="contact-cta" target="_blank" rel="noopener noreferrer" href={href} aria-labelledby="contact-cta-heading">
   <div class="contact-cta__inner">
     <div class="contact-cta__text">
-      <h2 id="contact-cta-heading" class="contact-cta__heading">
-        取材・広告のご依頼
-      </h2>
-      <p class="contact-cta__lead">
-        都市と建築をめぐる取材依頼、特集タイアップのご相談、
-        広告掲載のお問い合わせはこちらから承ります。
-      </p>
+      <h2 id="contact-cta-heading" class="contact-cta__heading">取材・広告のお問い合わせ</h2>
+      <p class="contact-cta__lead">都市と建築をめぐる取材依頼、特集タイアップのご相談、 広告掲載のお問い合わせはこちらから承ります。</p>
     </div>
 
     <div class="contact-cta__action">
       <span class="contact-cta__pill">
-        <span class="contact-cta__pill-label">CONTACT</span>
+        <span class="contact-cta__pill-label">問い合わせる</span>
         <span class="contact-cta__pill-arrow" aria-hidden="true">→</span>
       </span>
     </div>
@@ -40,10 +35,7 @@ const { href = "/contact/" } = Astro.props;
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(
-        rgba(245, 238, 230, 0.04) 0.6px,
-        transparent 0.6px
-      );
+      background-image: radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
       background-size: $paper-noise-size;
       pointer-events: none;
     }
@@ -103,16 +95,11 @@ const { href = "/contact/" } = Astro.props;
     border-radius: 0;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    box-shadow: $shadow-engi-lift;
     transition: border-radius 300ms ease-in-out;
   }
 
   .contact-cta:hover .contact-cta__pill {
     border-radius: 30px;
-  }
-
-  .contact-cta:active .contact-cta__pill {
-    box-shadow: $shadow-engi-press;
   }
 
   .contact-cta__pill-arrow {

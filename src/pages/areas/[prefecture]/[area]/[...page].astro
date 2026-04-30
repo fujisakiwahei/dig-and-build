@@ -1,0 +1,121 @@
+---
+import type { GetStaticPaths } from "astro";
+import { client } from "../../../../lib/microcms";
+import type {
+  Article,
+  Area,
+  Category,
+  ListResponse,
+  Prefecture,
+} from "../../../../lib/microcms";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PageTitle from "../../../../components/PageTitle.astro";
+import ArticleGrid from "../../../../components/ArticleGrid.astro";
+import SidebarCategoryList from "../../../../components/SidebarCategoryList.astro";
+import SidebarAreaList from "../../../../components/SidebarAreaList.astro";
+import Pagination from "../../../../components/Pagination.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const areasRes = await client.get<ListResponse<Area>>({
+    endpoint: "areas",
+    queries: { orders: "order", limit: 100, depth: 2 },
+  });
+
+  const paths = await Promise.all(
+    areasRes.contents.flatMap((area) =>
+      (area.prefecture ?? []).map(async (pref) => {
+        const res = await client.get<ListResponse<Article>>({
+          endpoint: "articles",
+          queries: {
+            filters: `area[contains]${area.id}`,
+            orders: "-publishedAt",
+            limit: 100,
+            depth: 2,
+          },
+        });
+        return paginate(res.contents, {
+          params: { prefecture: pref.slug, area: area.slug },
+          props: { areaName: area.name, prefectureName: pref.name },
+          pageSize: 18,
+        });
+      }),
+    ),
+  );
+  return paths.flat();
+}) satisfies GetStaticPaths;
+
+const { page, areaName, prefectureName } = Astro.props as {
+  page: import("astro").Page<Article>;
+  areaName: string;
+  prefectureName: string;
+};
+const { prefecture, area } = Astro.params;
+
+const categories = await client.get<ListResponse<Category>>({
+  endpoint: "categories",
+  queries: { orders: "order", limit: 100 },
+});
+
+const prefectures = await client.get<ListResponse<Prefecture>>({
+  endpoint: "prefectures",
+  queries: { orders: "order", limit: 100 },
+});
+
+const areas = await client.get<ListResponse<Area>>({
+  endpoint: "areas",
+  queries: { orders: "order", limit: 100 },
+});
+
+const hasSidebar =
+  categories.contents.length > 0 ||
+  (prefectures.contents.length > 0 && areas.contents.length > 0);
+const hasMain = page.data.length > 0;
+
+const hrefBuilder = (n: number) =>
+  n === 1
+    ? `/areas/${prefecture}/${area}`
+    : `/areas/${prefecture}/${area}/${n}`;
+---
+
+<BaseLayout title={`${prefectureName}/${areaName} | Dig and Build`}>
+  <div class="home-layout">
+    {
+      hasSidebar && (
+        <aside class="home-layout__sidebar">
+          {categories.contents.length > 0 && (
+            <SidebarCategoryList categories={categories.contents} />
+          )}
+          {prefectures.contents.length > 0 && areas.contents.length > 0 && (
+            <SidebarAreaList
+              prefectures={prefectures.contents}
+              areas={areas.contents}
+            />
+          )}
+        </aside>
+      )
+    }
+    <div class="home-layout__main">
+      <PageTitle prefix={prefectureName} name={areaName} />
+      {
+        hasMain ? (
+          <ArticleGrid articles={page.data} />
+        ) : (
+          <p class="articles-list__empty">記事はまだありません。</p>
+        )
+      }
+      {page.lastPage > 1 && <Pagination page={page} hrefBuilder={hrefBuilder} />}
+    </div>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  @use "../../../../styles/design-tokens.scss" as *;
+
+  .articles-list__empty {
+    margin: 0;
+    padding: $space-7 0;
+    text-align: center;
+    color: $color-muted;
+    font-family: $font-serif;
+  }
+</style>

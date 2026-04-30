@@ -1,0 +1,21 @@
+---
+import { client } from "../../lib/microcms";
+import type { Category, ListResponse } from "../../lib/microcms";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CategoryList from "../../components/CategoryList.astro";
+import heroImg from "../../images/hero/articles.webp";
+
+const categories = await client.get<ListResponse<Category>>({
+  endpoint: "categories",
+  queries: {
+    orders: "order",
+    limit: 100,
+  },
+});
+---
+
+<BaseLayout title="カテゴリー一覧 | Dig and Build">
+  <PageHero title="カテゴリー一覧" image={heroImg} alt="" />
+  {categories.contents.length > 0 && <CategoryList categories={categories.contents} />}
+</BaseLayout>

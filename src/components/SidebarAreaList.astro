@@ -1,0 +1,85 @@
+---
+import type { Area, Prefecture } from "../lib/microcms";
+
+interface Props {
+  prefectures: Prefecture[];
+  areas: Area[];
+}
+
+const { prefectures, areas } = Astro.props;
+
+const groups = prefectures.map((prefecture) => ({
+  prefecture,
+  areas: areas.filter((area) => area.prefecture?.some((p) => p.id === prefecture.id)),
+}));
+---
+
+<section class="sidebar-areas">
+  <div class="sidebar-areas__label">【 エリア 】</div>
+  <div class="sidebar-areas__groups">
+    {
+      groups.map(({ prefecture, areas: areasInPref }) => (
+        <div class="sidebar-areas__group">
+          <h3 class="sidebar-areas__pref">{prefecture.name}</h3>
+          <div class="sidebar-areas__areas">
+            {areasInPref.map((area) => (
+              <a class="sidebar-areas__area" href={`/areas/${prefecture.slug}/${area.slug}/`}>
+                {area.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .sidebar-areas__label {
+    margin-bottom: 18px;
+    font-family: $font-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.14em;
+  }
+
+  .sidebar-areas__groups {
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+  }
+
+  .sidebar-areas__pref {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    font-family: $font-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .sidebar-areas__areas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .sidebar-areas__area {
+    font-family: $font-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: $color-text;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color $dur-1 $ease;
+
+    &:hover {
+      color: $color-engi;
+    }
+  }
+</style>

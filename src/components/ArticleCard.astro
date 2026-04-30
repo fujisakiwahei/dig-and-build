@@ -1,0 +1,137 @@
+---
+import type { Article } from "../lib/microcms";
+import ArticleMeta from "./ArticleMeta.astro";
+
+interface Props {
+  article: Article;
+  layout?: "stack" | "row";
+}
+
+const { article, layout = "stack" } = Astro.props;
+const href = `/articles/${article.slug}/`;
+---
+
+<a class:list={["article-card", `article-card--${layout}`]} href={href}>
+  <div class="article-card__thumb">
+    {
+      article.eyecatch ? (
+        <img
+          src={article.eyecatch.url}
+          alt=""
+          loading="lazy"
+          width={article.eyecatch.width}
+          height={article.eyecatch.height}
+        />
+      ) : (
+        <div class="article-card__thumb-placeholder" aria-hidden="true" />
+      )
+    }
+  </div>
+
+  <div class="article-card__body">
+    <ArticleMeta article={article} />
+    <h3 class="article-card__title">{article.title}</h3>
+    {
+      article.description && (
+        <p class="article-card__excerpt">{article.description}</p>
+      )
+    }
+  </div>
+</a>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .article-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: all $dur-3 $ease;
+
+    @media (hover: hover) {
+      &:hover {
+        .article-card__thumb{
+          border-radius: 0 12px 12px 12px;
+
+          img{
+            transform: scale(1.1);
+          }
+        }
+
+      }
+    }
+  }
+
+  .article-card__thumb {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border: 1px solid $color-border;
+    background-color: $color-bg-deep;
+    border-radius: 0;
+    transition: all $dur-3 $ease;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all $dur-1000 $ease;
+    }
+  }
+
+  .article-card__thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: $color-bg-deep;
+  }
+
+  .article-card__body {
+    margin-top: 14px;
+  }
+
+  .article-card__title {
+    margin: 10px 0 0;
+    font-family: $font-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: $color-accent;
+    letter-spacing: 0.04em;
+  }
+
+  .article-card__excerpt {
+    margin: 6px 0 0;
+    font-family: $font-serif;
+    font-size: 13px;
+    line-height: 1.85;
+    color: $color-text;
+    letter-spacing: 0.03em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-card--row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid $color-border;
+
+    .article-card__thumb {
+      aspect-ratio: 3 / 2;
+    }
+
+    .article-card__body {
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article-card--row {
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+    }
+  }
+</style>

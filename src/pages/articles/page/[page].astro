@@ -1,0 +1,48 @@
+---
+import type { GetStaticPaths } from "astro";
+import { client } from "../../../lib/microcms";
+import type { Article, ListResponse } from "../../../lib/microcms";
+import ArticleArchivePage from "../../../components/ArticleArchivePage.astro";
+
+export const getStaticPaths = (async () => {
+  const pageSize = 18;
+  const res = await client.get<ListResponse<Article>>({
+    endpoint: "articles",
+    queries: {
+      orders: "-publishedAt",
+      limit: 100,
+      depth: 2,
+    },
+  });
+
+  const lastPage = Math.max(1, Math.ceil(res.contents.length / pageSize));
+
+  return Array.from({ length: Math.max(0, lastPage - 1) }, (_, index) => {
+    const currentPage = index + 2;
+    const start = (currentPage - 1) * pageSize;
+
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        articles: res.contents.slice(start, start + pageSize),
+        currentPage,
+        lastPage,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  articles: Article[];
+  currentPage: number;
+  lastPage: number;
+}
+
+const { articles, currentPage, lastPage } = Astro.props;
+---
+
+<ArticleArchivePage
+  articles={articles}
+  currentPage={currentPage}
+  lastPage={lastPage}
+/>

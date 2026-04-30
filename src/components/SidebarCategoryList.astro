@@ -1,0 +1,55 @@
+---
+import type { Category } from "../lib/microcms";
+
+interface Props {
+  categories: Category[];
+}
+
+const { categories } = Astro.props;
+---
+
+<section class="sidebar-categories">
+  <div class="sidebar-categories__label">【 カテゴリー 】</div>
+  <div class="sidebar-categories__list">
+    {
+      categories.map((category) => (
+        <a class="sidebar-categories__link" href={`/categories/${category.slug}/`}>
+          {category.name}
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .sidebar-categories__label {
+    margin-bottom: 18px;
+    font-family: $font-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.14em;
+  }
+
+  .sidebar-categories__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .sidebar-categories__link {
+    font-family: $font-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: $color-text;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color $dur-1 $ease;
+
+    &:hover {
+      color: $color-engi;
+    }
+  }
+</style>

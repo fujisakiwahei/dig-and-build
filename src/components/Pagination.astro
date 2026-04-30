@@ -1,0 +1,174 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+  page?: Page<unknown>;
+  baseLabel?: string;
+  currentPage?: number;
+  lastPage?: number;
+  hrefBuilder?: (n: number) => string;
+}
+
+const {
+  page,
+  baseLabel = "ページネーション",
+  currentPage = page?.currentPage ?? 1,
+  lastPage = page?.lastPage ?? 1,
+  hrefBuilder = (n: number) => (n === 1 ? "/articles/page/" : `/articles/page/${n}/`),
+} = Astro.props;
+
+type Item = number | "ellipsis";
+
+function buildPageItems(current: number, last: number): Item[] {
+  if (last <= 5) {
+    return Array.from({ length: last }, (_, i) => i + 1);
+  }
+  if (current <= 3) {
+    return [1, 2, 3, 4, "ellipsis", last] as Item[];
+  }
+  if (current >= last - 2) {
+    return [1, "ellipsis", last - 3, last - 2, last - 1, last] as Item[];
+  }
+  return [1, "ellipsis", current - 1, current, current + 1, "ellipsis", last] as Item[];
+}
+
+const items = buildPageItems(currentPage, lastPage);
+const prevHref = currentPage > 1 ? hrefBuilder(currentPage - 1) : undefined;
+const nextHref = currentPage < lastPage ? hrefBuilder(currentPage + 1) : undefined;
+---
+
+<nav class="pagination" aria-label={baseLabel}>
+  {
+    prevHref ? (
+      <a href={prevHref} class="pagination__nav" rel="prev">
+        ← Prev
+      </a>
+    ) : (
+      <span class="pagination__nav is-disabled" aria-hidden="true">
+        ← Prev
+      </span>
+    )
+  }
+
+  <ol class="pagination__list">
+    {
+      items.map((item) =>
+        item === "ellipsis" ? (
+          <li>
+            <span class="pagination__ellipsis" aria-hidden="true">
+              …
+            </span>
+          </li>
+        ) : item === currentPage ? (
+          <li>
+            <span class="pagination__page is-current" aria-current="page">
+              {item}
+            </span>
+          </li>
+        ) : (
+          <li>
+            <a href={hrefBuilder(item)} class="pagination__page">
+              {item}
+            </a>
+          </li>
+        ),
+      )
+    }
+  </ol>
+
+  {
+    nextHref ? (
+      <a href={nextHref} class="pagination__nav" rel="next">
+        Next →
+      </a>
+    ) : (
+      <span class="pagination__nav is-disabled" aria-hidden="true">
+        Next →
+      </span>
+    )
+  }
+</nav>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-4;
+    margin: $space-8 0 $space-9;
+  }
+
+  .pagination__list {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .pagination__page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 $space-2;
+    border: 1px solid $color-engi;
+    background: transparent;
+    color: $color-engi;
+    font-family: $font-serif;
+    font-size: $fs-small;
+    text-decoration: none;
+    border-radius: $radius-0;
+    transition:
+      background $dur-1 $ease,
+      color $dur-1 $ease,
+      border-radius $dur-3 $ease;
+  }
+
+  .pagination__page:hover {
+    background: $color-engi;
+    color: $color-engi-ink;
+    border-radius: 50%;
+  }
+
+  .pagination__page.is-current {
+    background: $color-engi;
+    color: $color-engi-ink;
+    border-color: $color-engi;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .pagination__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 36px;
+    color: $color-muted;
+    user-select: none;
+  }
+
+  .pagination__nav {
+    color: $color-engi;
+    text-decoration: none;
+    font-family: $font-serif;
+    font-size: $fs-small;
+    letter-spacing: $tracking;
+    transition: opacity $dur-1 $ease;
+  }
+
+  .pagination__nav:hover {
+    text-decoration: underline;
+  }
+
+  .pagination__nav.is-disabled {
+    color: $color-muted;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+</style>

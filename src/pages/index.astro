@@ -1,22 +1,99 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { client } from '../lib/microcms';
-import type { BlogResponse } from '../lib/microcms';
+import { client } from "../lib/microcms";
+import type {
+  Article,
+  Area,
+  Category,
+  ListResponse,
+  Prefecture,
+} from "../lib/microcms";
+import FeaturedArticle from "../components/FeaturedArticle.astro";
+import ArticleGrid from "../components/ArticleGrid.astro";
+import SidebarCategoryList from "../components/SidebarCategoryList.astro";
+import SidebarAreaList from "../components/SidebarAreaList.astro";
 
 // SSGなのでサーバーサイドで実行
-const data = await client.get<BlogResponse>({
-  endpoint: 'articles',
+const featuredPost = await client.get<ListResponse<Article>>({
+  endpoint: "articles",
   queries: {
-    orders: '-publishedAt',
+    limit: 1,
+    filters: "isFeatured[equals]true",
+    depth: 2,
+  },
+});
+
+const latestPosts = await client.get<ListResponse<Article>>({
+  endpoint: "articles",
+  queries: {
+    orders: "-publishedAt",
+    limit: 9,
+    depth: 2,
+  },
+});
+
+const categories = await client.get<ListResponse<Category>>({
+  endpoint: "categories",
+  queries: {
+    orders: "order",
     limit: 100,
   },
 });
-console.log(data);
+
+const prefectures = await client.get<ListResponse<Prefecture>>({
+  endpoint: "prefectures",
+  queries: {
+    orders: "order",
+    limit: 100,
+  },
+});
+
+const areas = await client.get<ListResponse<Area>>({
+  endpoint: "areas",
+  queries: {
+    orders: "order",
+    limit: 100,
+  },
+});
+
+const featured = featuredPost.contents[0];
+const latest = latestPosts.contents.slice(0, 9);
+
+const hasSidebar =
+  categories.contents.length > 0 ||
+  (prefectures.contents.length > 0 && areas.contents.length > 0);
+const hasMain = latest.length > 0;
 ---
 
-<script>
-</script>
-
 <BaseLayout title="Dig and Build">
-  <h1>Dig and Build</h1>
+  {featured && <FeaturedArticle article={featured} />}
+
+  {
+    (hasMain || hasSidebar) && (
+      <div class="home-layout">
+        {hasSidebar && (
+          <aside class="home-layout__sidebar">
+            {categories.contents.length > 0 && (
+              <SidebarCategoryList categories={categories.contents} />
+            )}
+            {prefectures.contents.length > 0 &&
+              areas.contents.length > 0 && (
+                <SidebarAreaList
+                  prefectures={prefectures.contents}
+                  areas={areas.contents}
+                />
+              )}
+          </aside>
+        )}
+        {hasMain && (
+          <div class="home-layout__main">
+            <ArticleGrid articles={latest} heading="最新の記事" />
+            <div class="home-layout__more">
+              <a href="/articles/page/" class="btn-engi">記事一覧を見る</a>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
 </BaseLayout>

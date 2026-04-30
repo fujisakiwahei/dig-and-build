@@ -1,0 +1,575 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { client, formatDate } from "../../lib/microcms";
+import type { Article, ListResponse } from "../../lib/microcms";
+import facebookIcon from "../../images/icons/icon-facebook.svg?raw";
+import xIcon from "../../images/icons/icon-x.svg?raw";
+
+export const getStaticPaths = (async () => {
+  const res = await client.get<ListResponse<Article>>({
+    endpoint: "articles",
+    queries: {
+      orders: "-publishedAt",
+      limit: 100,
+      depth: 2,
+    },
+  });
+
+  return res.contents.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const area = article.area?.[0];
+const prefecture = area?.prefecture?.[0];
+const category = article.category;
+const areaHref = area && prefecture ? `/areas/${prefecture.slug}/${area.slug}/` : "/areas/";
+const articlePath = `/articles/${article.slug}/`;
+const canonicalUrl = Astro.site ? new URL(articlePath, Astro.site).toString() : articlePath;
+const encodedUrl = encodeURIComponent(canonicalUrl);
+const encodedTitle = encodeURIComponent(article.title);
+const pageTitle = `${article.title} | Dig and Build`;
+---
+
+<BaseLayout title={pageTitle}>
+  <article class="article-detail">
+    <header class="article-hero">
+      <div class="article-hero__inner">
+        <h1 class="article-hero__title">{article.title}</h1>
+      </div>
+    </header>
+
+    <div class="article-detail__inner">
+      <div class="article-detail__meta" aria-label="記事情報">
+        <div class="article-detail__terms">
+          {
+            area && (
+              <a class="article-detail__term" href={areaHref}>
+                {prefecture?.name && <span class="article-detail__term-prefix">{prefecture.name} /</span>}
+                <span class="article-detail__term-name">{area.name}</span>
+              </a>
+            )
+          }
+          {
+            category && (
+              <a class="article-detail__term" href={`/categories/${category.slug}/`}>
+                {category.name}
+              </a>
+            )
+          }
+        </div>
+        <time class="article-detail__date" datetime={article.publishedAt}>
+          {formatDate(article.publishedAt)}
+        </time>
+      </div>
+
+      {article.description && <p class="article-detail__description">{article.description}</p>}
+      {article.description && <div class="article-detail__separator" aria-hidden="true" />}
+
+      <div class="article-content" set:html={article.body} />
+
+      <footer class="article-detail__footer">
+        <section class="article-share" aria-labelledby="article-share-title">
+          <h2 id="article-share-title" class="article-share__title">Share</h2>
+          <div class="article-share__buttons" data-article-share>
+            <button class="article-share__button" type="button" data-share-copy> リンクをコピー </button>
+            <a class="article-share__button article-share__button--icon" href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`} target="_blank" rel="noopener noreferrer" aria-label="Xでシェア" data-share-x>
+              <Fragment set:html={xIcon} />
+            </a>
+            <a class="article-share__button article-share__button--icon" href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Facebookでシェア" data-share-facebook>
+              <Fragment set:html={facebookIcon} />
+            </a>
+          </div>
+          <p class="article-share__status" aria-live="polite" data-share-status></p>
+        </section>
+
+        <nav class="article-detail__nav" aria-label="記事ナビゲーション">
+          <a class="article-detail__nav-link" href="/articles/page/">記事一覧に戻る</a>
+          {
+            category && (
+              <a class="article-detail__nav-link" href={`/categories/${category.slug}/`}>
+                {category.name}の記事一覧に戻る
+              </a>
+            )
+          }
+        </nav>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  const shareRoot = document.querySelector("[data-article-share]");
+  const status = document.querySelector("[data-share-status]");
+  const copyButton = document.querySelector("[data-share-copy]");
+  const xLink = document.querySelector("[data-share-x]");
+  const facebookLink = document.querySelector("[data-share-facebook]");
+
+  if (shareRoot && copyButton) {
+    const currentUrl = window.location.href;
+    const currentTitle = document.title.replace(" | Dig and Build", "");
+
+    xLink?.setAttribute("href", `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`);
+    facebookLink?.setAttribute("href", `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`);
+
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        if (status) {
+          status.textContent = "リンクをコピーしました。";
+        }
+      } catch {
+        if (status) {
+          status.textContent = "コピーできませんでした。URLを選択してコピーしてください。";
+        }
+      }
+    });
+  }
+</script>
+
+<style lang="scss">
+  @use "../../styles/design-tokens.scss" as *;
+
+  .article-detail {
+    color: $color-text;
+  }
+
+  .article-hero {
+    padding: clamp(72px, 11vw, 152px) $gutter clamp(72px, 9vw, 132px);
+    background-color: transparent;
+  }
+
+  .article-hero__inner {
+    max-width: $content-max;
+    margin: 0 auto;
+  }
+
+  .article-hero__title {
+    margin: 0;
+    color: $color-engi;
+    font-family: $font-serif;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .article-detail__inner {
+    max-width: $content-max;
+    margin: 0 auto;
+    padding: 0 $gutter $space-10;
+  }
+
+  .article-detail__meta {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin-bottom: $space-5;
+  }
+
+  .article-detail__terms {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  .article-detail__term {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    padding: 5px 12px;
+    color: $color-engi-ink;
+    background-color: $color-engi;
+    font-family: $font-serif;
+    font-size: $fs-meta;
+    line-height: $lh-ui;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition:
+      background-color $dur-2 $ease,
+      border-radius $dur-2 $ease;
+
+    &:hover {
+      background-color: $color-engi-deep;
+      border-radius: 18px;
+    }
+  }
+
+  .article-detail__term-prefix {
+    font-size: 0.78em;
+    letter-spacing: 0.08em;
+    opacity: 0.72;
+  }
+
+  .article-detail__term-name {
+    font-size: 1em;
+  }
+
+  .article-detail__date {
+    color: $color-muted;
+    font-family: $font-sans;
+    font-size: $fs-meta;
+    line-height: $lh-ui;
+    letter-spacing: 0.1em;
+  }
+
+  .article-detail__description {
+    margin: 0 0 $space-4;
+    color: $color-accent;
+    font-family: $font-serif;
+    font-size: clamp(1.08rem, 1.5vw, 20px);
+    font-weight: 600;
+    line-height: 1.95;
+    letter-spacing: 0.04em;
+  }
+
+  .article-detail__separator {
+    width: 200px;
+    height: 1px;
+    margin: 0 0 $space-7;
+    background-color: $color-engi;
+  }
+
+  .article-content {
+    color: $color-text;
+    font-family: $font-serif;
+    font-size: clamp(1rem, 1.1vw, 1.06rem);
+    line-height: 2;
+    letter-spacing: 0.04em;
+  }
+
+  .article-content :global(*) {
+    max-width: 100%;
+  }
+
+  .article-content :global(*:first-child) {
+    margin-top: 0;
+  }
+
+  .article-content :global(*:last-child) {
+    margin-bottom: 0;
+  }
+
+  .article-content :global(p) {
+    margin: 0 0 $space-5;
+  }
+
+  .article-content :global(h1),
+  .article-content :global(h2),
+  .article-content :global(h3),
+  .article-content :global(h4) {
+    color: $color-accent;
+    font-family: $font-serif;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .article-content :global(h1) {
+    margin: $space-8 0 $space-4;
+    font-size: clamp(1.7rem, 2.4vw, 2.3rem);
+    line-height: 1.45;
+  }
+
+  .article-content :global(h2) {
+    margin: $space-8 0 $space-4;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    line-height: 1.5;
+    font-weight: 600;
+    color: $color-engi;
+    transform: translateX(-12px);
+
+    &::before {
+      content: "【";
+      display: inline-block;
+      margin-right: 0.5em;
+      color: $color-engi;
+    }
+
+    &::after {
+      content: "】";
+      display: inline-block;
+      width: 10px;
+      margin-left: 0.5em;
+      color: $color-engi;
+    }
+  }
+
+  .article-content :global(h3) {
+    margin: $space-7 0 $space-4;
+    font-size: clamp(1.22rem, 1.55vw, 1.5rem);
+    line-height: 1.55;
+    font-weight: 600;
+  }
+
+  .article-content :global(h4) {
+    margin: $space-6 0 $space-3;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    font-weight: 600;
+  }
+
+  .article-content :global(a) {
+    color: $color-engi;
+    text-decoration: none;
+    text-underline-offset: 0.22em;
+    transition: color $dur-2 $ease;
+
+    &:hover {
+      color: $color-engi-deep;
+      text-decoration: underline;
+    }
+  }
+
+  .article-content :global(strong) {
+    color: $color-accent;
+    font-weight: 600;
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    display: grid;
+    gap: $space-2;
+    margin: $space-5 0;
+    padding-left: 1.6em;
+  }
+
+  .article-content :global(ul) {
+    list-style: outside disc;
+    list-color: $color-engi;
+  }
+
+  .article-content :global(ol) {
+    list-style: outside decimal;
+  }
+
+  .article-content :global(li) {
+    padding-left: 0.2em;
+  }
+
+  .article-content :global(blockquote) {
+    margin: $space-7 0;
+    padding: $space-5 $space-6;
+    color: $color-accent;
+    background-color: transparent;
+    border: 1px solid $color-engi;
+  }
+
+  .article-content :global(blockquote p) {
+    margin-bottom: $space-4;
+  }
+
+  .article-content :global(figure) {
+    margin: $space-7 50% $space-7;
+    transform: translateX(-50%);
+    width: min(100vw - 40px, 960px);
+  }
+
+  .article-content :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: $color-bg-deep;
+  }
+
+  .article-content :global(figcaption) {
+    margin-top: $space-2;
+    color: $color-muted;
+    font-family: $font-sans;
+    font-size: $fs-meta;
+    line-height: $lh-ui;
+    letter-spacing: 0.04em;
+  }
+
+  .article-content :global(hr) {
+    margin: $space-8 0;
+    border: 0;
+    border-top: 1px solid $color-border;
+  }
+
+  .article-content :global(table) {
+    display: block;
+    width: 100%;
+    margin: $space-7 0;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-family: $font-sans;
+    font-size: $fs-small;
+    line-height: $lh-ui;
+    white-space: nowrap;
+  }
+
+  .article-content :global(th),
+  .article-content :global(td) {
+    padding: $space-3 $space-4;
+    border: 1px solid $color-border;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .article-content :global(th) {
+    color: $color-accent;
+    background-color: $color-bg-soft;
+    font-weight: 600;
+  }
+
+  .article-content :global(iframe) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+  }
+
+  .article-detail__footer {
+    margin-top: $space-9;
+    padding-top: $space-7;
+    border-top: 1px solid $color-border;
+  }
+
+  .article-share {
+    display: grid;
+    justify-items: center;
+    gap: $space-4;
+  }
+
+  .article-share__title {
+    margin: 0;
+    color: $color-engi;
+    font-family: $font-display;
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: $lh-ui;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .article-share__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $space-2;
+  }
+
+  .article-share__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 $space-5;
+    color: $color-engi;
+    background-color: transparent;
+    border: 1px solid rgba(107, 31, 36, 0.28);
+    border-radius: 0;
+    font-family: $font-sans;
+    font-size: 0.76rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      color $dur-2 $ease,
+      background-color $dur-2 $ease,
+      border-color $dur-2 $ease,
+      border-radius $dur-2 $ease;
+
+    &:hover {
+      color: $color-engi-ink;
+      background-color: $color-engi;
+      border-color: $color-engi;
+      border-radius: 24px;
+    }
+  }
+
+  .article-share__button--icon {
+    width: 48px;
+    padding: 0;
+  }
+
+  .article-share__button :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .article-share__status {
+    min-height: 1.5em;
+    margin: 0;
+    color: $color-muted;
+    font-family: $font-sans;
+    font-size: $fs-meta;
+    line-height: $lh-ui;
+    text-align: center;
+  }
+
+  .article-detail__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-3;
+    margin-top: $space-7;
+  }
+
+  .article-detail__nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: $space-4 $space-5;
+    color: $color-engi-ink;
+    background-color: $color-engi;
+    font-family: $font-serif;
+    font-size: $fs-small;
+    line-height: $lh-ui;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color $dur-2 $ease,
+      border-radius $dur-2 $ease;
+
+    &:hover {
+      background-color: $color-engi-deep;
+      border-radius: 28px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article-hero {
+      padding-top: $space-8;
+      padding-bottom: $space-8;
+    }
+
+    .article-hero__title {
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+      line-height: 1.34;
+    }
+
+    .article-detail__inner {
+      padding-bottom: $space-8;
+    }
+
+    .article-detail__description,
+    .article-content {
+      line-height: 1.9;
+    }
+
+    .article-content :global(figure) {
+      width: calc(100vw - 32px);
+    }
+
+    .article-content :global(blockquote) {
+      padding: $space-5;
+    }
+
+    .article-detail__nav {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import type { Area, Prefecture } from "../lib/microcms";
+
+interface Props {
+  prefectures: Prefecture[];
+  areas: Area[];
+}
+
+const { prefectures, areas } = Astro.props;
+
+const groups = prefectures.map((prefecture) => ({
+  prefecture,
+  areas: areas.filter((area) => area.prefecture?.some((p) => p.id === prefecture.id)),
+}));
+---
+
+<section class="area-list">
+  <div class="area-list__inner">
+    <div class="area-list__label">【 エリア 】</div>
+    <div class="area-list__grid">
+      {
+        groups.map(({ prefecture, areas: areasInPref }) => (
+          <div class="area-list__group">
+            <h3 class="area-list__pref">{prefecture.name}</h3>
+            <div class="area-list__areas">
+              {areasInPref.map((area) => (
+                <a class="area-list__area" href={`/areas/${prefecture.slug}/${area.slug}/`}>
+                  {area.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .area-list {
+    width: 100%;
+  }
+
+  .area-list__inner {
+    max-width: $content-wide;
+    margin: 0 auto;
+    padding: $space-7 $gutter $space-8;
+  }
+
+  .area-list__label {
+    margin-bottom: $space-5;
+    font-family: $font-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.14em;
+  }
+
+  .area-list__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+
+  .area-list__pref {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    font-family: $font-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: $color-accent;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $color-border;
+  }
+
+  .area-list__areas {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .area-list__area {
+    font-family: $font-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: $color-text;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color $dur-1 $ease;
+
+    &:hover {
+      color: $color-engi;
+    }
+  }
+</style>
