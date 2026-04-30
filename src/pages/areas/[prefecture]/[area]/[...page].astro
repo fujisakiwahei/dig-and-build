@@ -75,9 +75,18 @@ const hrefBuilder = (n: number) =>
   n === 1
     ? `/areas/${prefecture}/${area}`
     : `/areas/${prefecture}/${area}/${n}`;
+
+const baseDescription = `${prefectureName}・${areaName} に関する記事の一覧。${areaName} の街・建築・再開発を紹介します。`;
+const pageDescription =
+  page.currentPage > 1
+    ? `${baseDescription}（${page.currentPage}ページ目）`
+    : baseDescription;
 ---
 
-<BaseLayout title={`${prefectureName}/${areaName} | Dig and Build`}>
+<BaseLayout
+  title={`${prefectureName}/${areaName} | Dig and Build`}
+  description={pageDescription}
+>
   <div class="home-layout">
     {
       hasSidebar && (

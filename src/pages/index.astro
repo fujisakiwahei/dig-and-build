@@ -65,7 +65,10 @@ const hasSidebar =
 const hasMain = latest.length > 0;
 ---
 
-<BaseLayout title="Dig and Build">
+<BaseLayout
+  title="Dig and Build"
+  description="Dig and Buildは、都市の意図を掘り下げるメディアです。建築・再開発・街並みの背景にある思想や物語を読み解きます。"
+>
   {featured && <FeaturedArticle article={featured} />}
 
   {

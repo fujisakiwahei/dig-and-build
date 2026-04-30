@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dig-and-build.com/sitemap-index.xml

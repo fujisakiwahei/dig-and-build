@@ -78,7 +78,7 @@
 - [ ] Contact `/contact/` を作成する
 - [ ] Advertise `/advertise/` を作成する
 - [x] Privacy Policy `/privacy-policy/` を作成する
-- [x] 404ページを作成する
+- [x] 404ページを作成する（中央寄せ・大きな404・トップへの導線）
 - [x] 記事詳細ページのデザイン調整を反映する
   - タイトルサイズ調整
   - 地域ラベルの表示調整
@@ -135,29 +135,25 @@
 
 ## 12. Lint / Format
 
-- [ ] ESLint設定
-- [ ] Prettier設定
-- [ ] Stylelint設定（SCSS順序）
-- [ ] スクリプト追加
+- [x] ESLint設定
+- [x] Prettier設定
+- [x] Stylelint設定（SCSS順序）
+- [x] スクリプト追加
 
   "lint": "eslint ."
   "lint:style": "stylelint \"src/**/\*.{scss,astro}\""
   "fix:style": "stylelint \"src/**/\*.{scss,astro}\" --fix"
 
-- [ ] checkスクリプト統合
-
-  "check": "astro check && pnpm lint && pnpm lint:style && pnpm test"
-
 ---
 
 ## 13. SEO・公開準備
 
-- [ ] title / description設定
-- [ ] OGP設定
-- [ ] canonical設定
-- [ ] sitemap生成
-- [ ] robots.txt作成
-- [ ] Search Console設定
+- [x] title / description設定
+- [x] OGP設定
+- [x] canonical設定
+- [x] sitemap生成
+- [x] robots.txt作成
+- [x] Search Console設定（コード側のmeta tag対応 + Vercel環境変数登録済。最終的なverify確認とサイトマップ送信は再デプロイ後に実施）
 - [x] プライバシーポリシー整備
 
 ---

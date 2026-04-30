@@ -15,7 +15,10 @@ const categories = await client.get<ListResponse<Category>>({
 });
 ---
 
-<BaseLayout title="カテゴリー一覧 | Dig and Build">
+<BaseLayout
+  title="カテゴリー一覧 | Dig and Build"
+  description="Dig and Build のカテゴリー一覧。テーマから興味のある記事を探せます。"
+>
   <PageHero title="カテゴリー一覧" image={heroImg} alt="" />
   {categories.contents.length > 0 && <CategoryList categories={categories.contents} />}
 </BaseLayout>

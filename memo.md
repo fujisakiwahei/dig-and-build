@@ -121,3 +121,11 @@ postcss-htmlを入れることで、styleタグの中だけを安全に処理で
 Astroでstyleタグ内のCSSまで整形したい場合は、postcss-htmlを入れる。  
 AstroのフォーマッタはPrettierに統一する。  
 CSSプロパティ順はPrettierではなくStylelintで管理する。
+
+## AstroのSEO対策
+
+- `@astrojs/sitemap`をinstallしてサイトマップ作成
+  - astro.config.mjs に integration を追加することで、ビルド時にサイトマップが作成される
+  - サイトマップは初回送信したら2回目以降は自動でやってくれる
+- Search Consoleの認証は、headへのメタタグ埋め込み。今回は環境変数に入れておいた
+- public/robots.txtを作成した

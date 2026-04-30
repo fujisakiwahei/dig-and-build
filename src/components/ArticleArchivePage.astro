@@ -11,9 +11,18 @@ interface Props {
   articles: Article[];
   currentPage: number;
   lastPage: number;
+  description?: string;
 }
 
-const { articles, currentPage, lastPage } = Astro.props;
+const { articles, currentPage, lastPage, description } = Astro.props;
+
+const defaultDescription =
+  "Dig and Build の記事一覧。都市・建築・街の変化を伝える最新記事を一覧で確認できます。";
+const pageDescription =
+  description ??
+  (currentPage > 1
+    ? `${defaultDescription}（${currentPage}ページ目）`
+    : defaultDescription);
 
 const categories = await client.get<ListResponse<Category>>({
   endpoint: "categories",
@@ -37,7 +46,7 @@ const hasMain = articles.length > 0;
 const articlePageHref = (n: number) => (n === 1 ? "/articles/page/" : `/articles/page/${n}/`);
 ---
 
-<BaseLayout title="記事一覧 | Dig and Build">
+<BaseLayout title="記事一覧 | Dig and Build" description={pageDescription}>
   {
     (hasMain || hasSidebar) && (
       <div class="home-layout">

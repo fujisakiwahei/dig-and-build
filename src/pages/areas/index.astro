@@ -23,7 +23,10 @@ const areas = await client.get<ListResponse<Area>>({
 });
 ---
 
-<BaseLayout title="エリア一覧 | Dig and Build">
+<BaseLayout
+  title="エリア一覧 | Dig and Build"
+  description="Dig and Build のエリア一覧。日本各地の街・地域から記事を探せます。"
+>
   <PageHero title="エリア一覧" image={heroImg} alt="" />
   {prefectures.contents.length > 0 && areas.contents.length > 0 && <AreaList prefectures={prefectures.contents} areas={areas.contents} />}
 </BaseLayout>

@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "ページが見つかりません | Dig and Build";
+const description =
+  "お探しのページは存在しないか、移動した可能性があります。";
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="not-found">
+    <p class="not-found__eyebrow">Page Not Found</p>
+    <h1 class="not-found__code">404</h1>
+    <p class="not-found__message">お探しのページは見つかりませんでした。</p>
+    <p class="not-found__action">
+      <a href="/" class="not-found__link">トップページへ戻る</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @use "../styles/design-tokens.scss" as *;
+
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: $space-9 $gutter;
+    text-align: center;
+  }
+
+  .not-found__eyebrow {
+    margin: 0 0 $space-4;
+    font-family: $font-display;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: $lh-ui;
+    letter-spacing: $tracking-eyebrow;
+    color: $color-muted;
+  }
+
+  .not-found__code {
+    margin: 0;
+    font-family: $font-display;
+    font-size: clamp(8rem, 22vw, 16rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: $color-engi;
+  }
+
+  .not-found__message {
+    margin: $space-6 0 0;
+    font-family: $font-serif;
+    font-size: $fs-body;
+    line-height: $lh-body;
+    letter-spacing: $tracking;
+    color: $color-text;
+  }
+
+  .not-found__action {
+    margin: $space-7 0 0;
+  }
+
+  .not-found__link {
+    font-family: $font-serif;
+    font-size: $fs-body;
+    letter-spacing: 0.06em;
+    color: $color-engi;
+    text-decoration: none;
+    border-bottom: 1px solid $color-engi;
+    padding-bottom: 2px;
+    transition: color $dur-1 $ease;
+
+    &:hover {
+      color: $color-engi-deep;
+    }
+  }
+
+  @media (width <= 768px) {
+    .not-found {
+      min-height: 60vh;
+      padding: $space-8 $gutter;
+    }
+  }
+</style>
