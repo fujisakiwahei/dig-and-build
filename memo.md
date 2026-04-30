@@ -73,3 +73,51 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ## ネットワーク・インフラ
 
 - おなまえ.comでドメインをとって、ネームサーバをVercelに向ける運用。レンタルサーバは借りておらず、メールなども使う予定がないので。
+
+## AstroファイルのCSSの自動並び替えとlinterを追加
+
+### 目的
+
+.astro内のstyleタグも整形し、CSSプロパティ順を自動で揃え、保存時に実行される状態にする。
+
+### 入れたパッケージ
+
+stylelint：CSSのルールチェック本体。  
+stylelint-config-standard-scss：SCSS向けの基本ルール。  
+stylelint-order：CSSプロパティの並び順を制御。  
+postcss-scss：SCSS構文をStylelintが読めるようにする。  
+postcss-html：.astro内のstyleタグだけを解析できるようにする。  
+prettier：改行・スペース・インデントなどの見た目を整える。
+
+### Stylelintでやったこと
+
+.astroはpostcss-htmlで解析する。  
+.scssはpostcss-scssで解析する。  
+Astro独自の:globalは例外として許可する。  
+BEM形式のクラス名を使うため、selector-class-patternは無効化する。
+
+### VSCodeでやったこと
+
+AstroのdefaultFormatterをPrettierにした。
+
+    "[astro]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+
+保存時にStylelintとESLintのfixを走らせるようにした。
+
+### 保存時の流れ
+
+保存すると、Prettierで全体整形され、ESLintでJS/TS周りが修正され、StylelintでCSS/SCSSのルール修正とプロパティ順の並び替えが行われる。
+
+### ハマったポイント
+
+.astroをそのままStylelintに読ませると、AstroのフロントマターやTypeScript部分をCSSとして誤認する。  
+postcss-htmlを入れることで、styleタグの中だけを安全に処理できるようになった。  
+また、:globalは通常のCSSではないため、Stylelint側で明示的に許可する必要があった。
+
+### まとめ
+
+Astroでstyleタグ内のCSSまで整形したい場合は、postcss-htmlを入れる。  
+AstroのフォーマッタはPrettierに統一する。  
+CSSプロパティ順はPrettierではなくStylelintで管理する。

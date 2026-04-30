@@ -68,15 +68,15 @@ const ogImageUrl = new URL(ogImage, siteUrl).toString();
   @use "../styles/design-tokens.scss" as *;
 
   body {
-    background-color: $color-bg;
-    background-image: $paper-noise;
-    background-size: $paper-noise-size;
-    color: $fg-1;
     font-family: $font-serif;
     font-size: $fs-body;
     line-height: $lh-body;
     letter-spacing: $tracking;
+    color: $fg-1;
+    background-color: $color-bg;
+    background-image: $paper-noise;
+    background-size: $paper-noise-size;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizelegibility;
   }
 </style>

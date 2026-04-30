@@ -1,9 +1,5 @@
 ---
-import {
-  MICROCMS_IMAGE_QUALITY,
-  buildMicroCMSImageSrcSet,
-  buildMicroCMSImageUrl,
-} from "../lib/microcms";
+import { MICROCMS_IMAGE_QUALITY, buildMicroCMSImageSrcSet, buildMicroCMSImageUrl } from "../lib/microcms";
 import type { Article } from "../lib/microcms";
 import ArticleMeta from "./ArticleMeta.astro";
 
@@ -15,11 +11,7 @@ const { article } = Astro.props;
 const href = `/articles/${article.slug}/`;
 
 const excerptMax = 60;
-const excerpt =
-  article.description &&
-  (article.description.length > excerptMax
-    ? `${article.description.slice(0, excerptMax)}...`
-    : article.description);
+const excerpt = article.description && (article.description.length > excerptMax ? `${article.description.slice(0, excerptMax)}...` : article.description);
 const imageWidths = [400, 768, 1024, 1536];
 const imageSizes = "(max-width: 768px) 100vw, 50vw";
 const imageAspectRatio = { width: 4, height: 3 };
@@ -48,22 +40,7 @@ const eyecatchImage = article.eyecatch
 
     <a class="featured-article__link" href={href}>
       <div class="featured-article__thumb">
-        {
-          article.eyecatch && eyecatchImage ? (
-            <img
-              src={eyecatchImage.src}
-              srcset={eyecatchImage.srcset}
-              sizes={imageSizes}
-              alt=""
-              loading="eager"
-              decoding="async"
-              width={article.eyecatch.width}
-              height={article.eyecatch.height}
-            />
-          ) : (
-            <div class="featured-article__thumb-placeholder" aria-hidden="true" />
-          )
-        }
+        {article.eyecatch && eyecatchImage ? <img src={eyecatchImage.src} srcset={eyecatchImage.srcset} sizes={imageSizes} alt="" loading="eager" decoding="async" width={article.eyecatch.width} height={article.eyecatch.height} /> : <div class="featured-article__thumb-placeholder" aria-hidden="true" />}
       </div>
 
       <div class="featured-article__body">
@@ -85,7 +62,7 @@ const eyecatchImage = article.eyecatch
     @media (hover: hover) {
       &:hover {
         .featured-article__thumb {
-          border-radius: 0 20px 20px 20px;
+          border-radius: 0 20px 20px;
 
           img {
             transform: scale(1.1);
@@ -104,9 +81,9 @@ const eyecatchImage = article.eyecatch
   }
 
   .featured-article__inner {
-    max-width: $content-wider;
     margin: 0 auto;
     padding: $space-7 $gutter $space-6;
+    max-width: $content-wider;
   }
 
   .featured-article__label {
@@ -114,32 +91,32 @@ const eyecatchImage = article.eyecatch
     font-family: $font-serif;
     font-size: 18px;
     font-weight: 600;
-    color: $color-engi;
     letter-spacing: 0.14em;
+    color: $color-engi;
   }
 
   .featured-article__link {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
     align-items: center;
-    color: inherit;
+    gap: 56px;
+    grid-template-columns: 1fr 1fr;
     text-decoration: none;
+    color: inherit;
   }
 
   .featured-article__thumb {
     overflow: hidden;
-    aspect-ratio: 4 / 3;
-    border: 1px solid $color-border;
     background-color: $color-bg-deep;
+    border: 1px solid $color-border;
     transition: all $dur-3 $ease;
+    aspect-ratio: 4 / 3;
 
     img {
-      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      display: block;
       transition: all $dur-1000 $ease;
+      object-fit: cover;
     }
   }
 
@@ -155,43 +132,43 @@ const eyecatchImage = article.eyecatch
     font-size: clamp(28px, 3vw, 38px);
     font-weight: 500;
     line-height: 1.3;
-    color: $color-accent;
     letter-spacing: 0.04em;
+    color: $color-accent;
     transition: color $dur-2 $ease;
   }
 
   .featured-article__excerpt {
-    max-width: 460px;
     margin: 0;
+    max-width: 460px;
     font-family: $font-serif;
     font-size: 15px;
     line-height: 1.9;
-    color: $color-text;
     letter-spacing: 0.03em;
+    color: $color-text;
   }
 
   .featured-article__more {
-    display: inline-block;
     margin-top: 28px;
     padding-bottom: 4px;
+    display: inline-block;
     font-family: $font-display;
     font-size: 13px;
     font-weight: 500;
-    color: $color-text;
     letter-spacing: 0.22em;
     text-transform: uppercase;
+    color: $color-text;
     border-bottom: 1px solid $color-accent;
     transition: border-color $dur-1 $ease;
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .featured-article__inner {
       padding: $space-6 $gutter $space-5;
     }
 
     .featured-article__link {
-      grid-template-columns: 1fr;
       gap: $space-5;
+      grid-template-columns: 1fr;
     }
   }
 </style>

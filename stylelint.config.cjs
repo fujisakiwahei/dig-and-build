@@ -1,13 +1,36 @@
+// stylelint.config.cjs
+
 module.exports = {
   extends: ["stylelint-config-standard-scss"],
   plugins: ["stylelint-order"],
   overrides: [
+    // SCSS / CSS
     {
-      files: ["**/*.{css,scss,astro}"],
+      files: ["**/*.{css,scss}"],
       customSyntax: "postcss-scss",
+    },
+    // Astro
+    {
+      files: ["**/*.astro"],
+      customSyntax: "postcss-html",
     },
   ],
   rules: {
+    // Astroの :global() を許可
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        ignorePseudoClasses: ["global"],
+      },
+    ],
+
+    // BEM許可
+    "selector-class-pattern": null,
+
+    // 空コメント許可
+    "scss/comment-no-empty": null,
+
+    // プロパティ並び順
     "order/properties-order": [
       {
         groupName: "Content",

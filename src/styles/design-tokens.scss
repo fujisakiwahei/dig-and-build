@@ -21,9 +21,9 @@ $color-engi-soft: #7d2a30; // hover lift
 $color-engi-hover: #4f161a; // section-wide hover background
 $color-engi-footer: #2a0c10; // very dark wine — footer bg
 $color-engi-ink: #f5eee6; // paper-on-engi text
-$color-engi-ink-2: rgba(245, 238, 230, 0.62); // secondary
-$color-engi-rule: rgba(245, 238, 230, 0.18); // hairline
-$color-engi-glow: rgba(245, 238, 230, 0.05); // highlight
+$color-engi-ink-2: rgb(245 238 230 / 62%); // secondary
+$color-engi-rule: rgb(245 238 230 / 18%); // hairline
+$color-engi-glow: rgb(245 238 230 / 5%); // highlight
 
 // ---------- Semantic foreground ----------------------------
 $fg-1: $color-text; // primary body
@@ -34,9 +34,7 @@ $fg-on-engi: $color-engi-ink;
 // ---------- Type families ----------------------------------
 // System-font-first. Hiragino Mincho ProN > Yu Mincho fallback.
 $font-serif: "Hiragino Mincho ProN", "HiraMinProN-W3", "Yu Mincho", "YuMincho", "游明朝", "游明朝体", serif;
-
 $font-sans: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "游ゴシック", system-ui, sans-serif;
-
 $font-display: "Cormorant Garamond", "Hiragino Mincho ProN", "Yu Mincho", "游明朝", serif;
 
 // ---------- Type scale (editorial, not UI) -----------------
@@ -77,12 +75,11 @@ $radius-0: 0px; // default — paper has no radius
 $radius-1: 2px; // subtle pill ends
 $radius-2: 999px; // fully round (CTA capsule)
 
-$shadow-paper: 0 1px 0 rgba(31, 31, 31, 0.04);
-$shadow-engi-press: inset 0 0 0 1px rgba(245, 238, 230, 0.12);
+$shadow-paper: 0 1px 0 rgb(31 31 31 / 4%);
+$shadow-engi-press: inset 0 0 0 1px rgb(245 238 230 / 12%);
 $shadow-engi-lift:
-  0 1px 0 rgba(245, 238, 230, 0.1) inset,
-  0 24px 48px -24px rgba(31, 15, 15, 0.55);
-
+  0 1px 0 rgb(245 238 230 / 10%) inset,
+  0 24px 48px -24px rgb(31 15 15 / 55%);
 $ease: cubic-bezier(0.32, 0.72, 0.24, 1);
 $ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 $dur-1: 160ms;
@@ -92,5 +89,5 @@ $dur-1000: 1000ms;
 $dur-2000: 2000ms;
 
 // ---------- Paper texture (subtle dot field) ---------------
-$paper-noise: radial-gradient(rgba(0, 0, 0, 0.035) 0.6px, transparent 0.6px);
+$paper-noise: radial-gradient(rgb(0 0 0 / 3.5%) 0.6px, transparent 0.6px);
 $paper-noise-size: 4px 4px;

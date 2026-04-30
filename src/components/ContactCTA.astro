@@ -23,19 +23,19 @@ const { href = "https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3
 
   .contact-cta {
     position: relative;
-    display: block;
     padding: 80px $gutter;
-    color: $color-engi-ink;
-    text-decoration: none;
-    background-color: $color-engi;
+    display: block;
     overflow: hidden;
+    text-decoration: none;
+    color: $color-engi-ink;
+    background-color: $color-engi;
     transition: background-color $dur-2 $ease;
 
     &::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
+      background-image: radial-gradient(rgb(245 238 230 / 4%) 0.6px, transparent 0.6px);
       background-size: $paper-noise-size;
       pointer-events: none;
     }
@@ -48,12 +48,12 @@ const { href = "https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3
   .contact-cta__inner {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: $space-7;
-    align-items: center;
-    max-width: $content-wide;
     margin: 0 auto;
+    max-width: $content-wide;
+    display: grid;
+    align-items: center;
+    gap: $space-7;
+    grid-template-columns: 1.3fr 1fr;
   }
 
   .contact-cta__heading {
@@ -62,39 +62,39 @@ const { href = "https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3
     font-size: clamp(26px, 3vw, 36px);
     font-weight: 500;
     line-height: 1.3;
-    color: $color-engi-ink;
     letter-spacing: 0.05em;
+    color: $color-engi-ink;
   }
 
   .contact-cta__lead {
-    max-width: 440px;
     margin: 0;
+    max-width: 440px;
     font-family: $font-serif;
     font-size: 14.5px;
     line-height: 1.85;
-    color: $color-engi-ink-2;
     letter-spacing: 0.04em;
+    color: $color-engi-ink-2;
   }
 
   .contact-cta__action {
     display: flex;
-    align-items: center;
     justify-content: flex-end;
+    align-items: center;
   }
 
   .contact-cta__pill {
+    padding: 20px 36px;
     display: inline-flex;
     align-items: center;
     gap: $space-4;
-    padding: 20px 36px;
     font-family: $font-display;
     font-size: 13px;
     font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: $color-engi;
     background-color: $color-engi-ink;
     border-radius: 0;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
     transition: border-radius 300ms ease-in-out;
   }
 
@@ -106,14 +106,14 @@ const { href = "https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3
     font-family: $font-serif;
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .contact-cta {
       padding: 56px $gutter;
     }
 
     .contact-cta__inner {
-      grid-template-columns: 1fr;
       gap: $space-6;
+      grid-template-columns: 1fr;
     }
 
     .contact-cta__action {

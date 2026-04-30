@@ -72,14 +72,14 @@ const eyecatchImage = article.eyecatch
 
   .article-card {
     display: block;
-    color: inherit;
     text-decoration: none;
+    color: inherit;
     transition: all $dur-3 $ease;
 
     @media (hover: hover) {
       &:hover {
         .article-card__thumb {
-          border-radius: 0 12px 12px 12px;
+          border-radius: 0 12px 12px;
 
           img {
             transform: scale(1.1);
@@ -95,18 +95,18 @@ const eyecatchImage = article.eyecatch
 
   .article-card__thumb {
     overflow: hidden;
-    aspect-ratio: 4 / 3;
-    border: 1px solid $color-border;
     background-color: $color-bg-deep;
+    border: 1px solid $color-border;
     border-radius: 0;
     transition: all $dur-3 $ease;
+    aspect-ratio: 4 / 3;
 
     img {
-      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      display: block;
       transition: all $dur-1000 $ease;
+      object-fit: cover;
     }
   }
 
@@ -126,29 +126,29 @@ const eyecatchImage = article.eyecatch
     font-size: 17px;
     font-weight: 600;
     line-height: 1.5;
-    color: $color-accent;
     letter-spacing: 0.04em;
+    color: $color-accent;
     transition: color $dur-2 $ease;
   }
 
   .article-card__excerpt {
     margin: 6px 0 0;
+    display: -webkit-box;
+    overflow: hidden;
     font-family: $font-serif;
     font-size: 13px;
     line-height: 1.85;
-    color: $color-text;
     letter-spacing: 0.03em;
-    display: -webkit-box;
+    color: $color-text;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .article-card--row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
     padding: 20px 0;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 180px 1fr;
     border-bottom: 1px solid $color-border;
 
     .article-card__thumb {
@@ -160,10 +160,10 @@ const eyecatchImage = article.eyecatch
     }
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .article-card--row {
-      grid-template-columns: 120px 1fr;
       gap: 16px;
+      grid-template-columns: 120px 1fr;
     }
   }
 </style>

@@ -33,9 +33,9 @@ const { articles, heading } = Astro.props;
   }
 
   .article-grid__inner {
-    max-width: $content-wide;
     margin: 0 auto;
     padding: $space-6 $gutter;
+    max-width: $content-wide;
   }
 
   .article-grid__label {
@@ -43,27 +43,27 @@ const { articles, heading } = Astro.props;
     font-family: $font-serif;
     font-size: 18px;
     font-weight: 600;
-    color: $color-engi;
     letter-spacing: 0.14em;
+    color: $color-engi;
   }
 
   .article-grid__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 48px 32px;
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (max-width: 1024px) {
+  @media (width <= 1024px) {
     .article-grid__grid {
-      grid-template-columns: repeat(2, 1fr);
       gap: 40px 24px;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 640px) {
+  @media (width <= 640px) {
     .article-grid__grid {
-      grid-template-columns: 1fr;
       gap: 32px;
+      grid-template-columns: 1fr;
     }
   }
 </style>

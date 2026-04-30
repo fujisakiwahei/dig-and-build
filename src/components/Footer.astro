@@ -50,15 +50,15 @@ const year = new Date().getFullYear();
   .site-footer {
     position: relative;
     padding: 64px $gutter 40px;
-    background-color: $color-engi-footer;
-    color: $color-engi-ink;
     overflow: hidden;
+    color: $color-engi-ink;
+    background-color: $color-engi-footer;
 
     &::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(rgba(245, 238, 230, 0.04) 0.6px, transparent 0.6px);
+      background-image: radial-gradient(rgb(245 238 230 / 4%) 0.6px, transparent 0.6px);
       background-size: $paper-noise-size;
       pointer-events: none;
     }
@@ -67,18 +67,18 @@ const year = new Date().getFullYear();
   .site-footer__inner {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr minmax(220px, 280px);
-    gap: $space-8;
-    align-items: stretch;
-    max-width: $content-wide;
     margin: 0 auto;
+    max-width: $content-wide;
+    display: grid;
+    align-items: stretch;
+    gap: $space-8;
+    grid-template-columns: 1fr minmax(220px, 280px);
   }
 
   .site-footer__list {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
   }
 
   .site-footer__row {
@@ -90,16 +90,16 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__row-link {
+    padding: 22px $space-1;
     display: flex;
     align-items: center;
     gap: $space-4;
-    padding: 22px $space-1;
     font-family: $font-serif;
     font-size: 15px;
     font-weight: 500;
-    color: $color-engi-ink;
     letter-spacing: 0.08em;
     text-decoration: none;
+    color: $color-engi-ink;
     transition: color $dur-1 $ease;
 
     &:hover {
@@ -116,21 +116,21 @@ const year = new Date().getFullYear();
     padding-top: 18px;
     font-family: $font-display;
     font-size: 12px;
-    color: $color-engi-ink-2;
     letter-spacing: 0.18em;
+    color: $color-engi-ink-2;
     border-top: 1px solid $color-engi-rule;
   }
 
   .site-footer__panel {
+    padding: 36px 28px;
+    min-height: 460px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: $space-6;
-    min-height: 460px;
-    padding: 36px 28px;
-    color: $color-engi-ink;
     text-decoration: none;
+    color: $color-engi-ink;
     border: 1px solid $color-engi-rule;
     transition: background-color $dur-1 $ease;
 
@@ -164,44 +164,44 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__panel-desc {
-    display: block;
     margin-bottom: 28px;
+    display: block;
     font-family: $font-serif;
     font-size: 13.5px;
     line-height: 1.85;
-    color: $color-engi-ink-2;
     letter-spacing: 0.04em;
     text-align: center;
+    color: $color-engi-ink-2;
   }
 
   .site-footer__panel-circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 96px;
     height: 96px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: $color-engi-ink;
     border: 1px solid $color-engi-ink-2;
     border-radius: 50%;
     transition: background-color $dur-1 $ease;
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .site-footer {
       padding: 48px $gutter 32px;
     }
 
     .site-footer__inner {
-      grid-template-columns: 1fr;
       gap: $space-6;
+      grid-template-columns: 1fr;
     }
 
     .site-footer__panel {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 0;
       padding: 28px 24px;
+      min-height: 0;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .site-footer__panel-vertical {

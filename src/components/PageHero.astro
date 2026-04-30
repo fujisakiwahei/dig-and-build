@@ -42,24 +42,24 @@ const { title, image, alt = "" } = Astro.props;
   .page-hero__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.18);
+    background: rgb(0 0 0 / 18%);
   }
 
   .page-hero__inner {
     position: relative;
+    padding: 0 $gutter;
     height: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 0 $gutter;
+    align-items: center;
   }
 
   .page-hero__plate {
-    background: #fff;
     padding: $space-2 $space-4;
-    box-shadow: $shadow-paper;
-    border-radius: $radius-0;
     text-align: center;
+    background: #fff;
+    border-radius: $radius-0;
+    box-shadow: $shadow-paper;
   }
 
   .page-hero__title {
@@ -67,9 +67,9 @@ const { title, image, alt = "" } = Astro.props;
     font-family: $font-serif;
     font-size: $fs-h1;
     font-weight: 500;
-    color: $color-accent;
-    letter-spacing: $tracking;
     line-height: $lh-tight;
+    letter-spacing: $tracking;
     text-align: center;
+    color: $color-accent;
   }
 </style>

@@ -110,60 +110,60 @@ const policyItems = [
   }
 
   .policy-page__hero {
-    max-width: $content-max;
     margin: 0 auto;
     padding: clamp(72px, 10vw, 136px) $gutter $space-7;
+    max-width: $content-max;
   }
 
   .policy-page__eyebrow {
     margin: 0 0 $space-3;
-    color: $color-muted;
     font-family: $font-display;
     font-size: 0.86rem;
     font-weight: 500;
     line-height: $lh-ui;
     letter-spacing: 0.2em;
+    color: $color-muted;
   }
 
   .policy-page__title {
     margin: 0;
-    color: $color-engi;
     font-family: $font-serif;
     font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 500;
     line-height: 1.28;
     letter-spacing: $tracking;
+    color: $color-engi;
   }
 
   .policy-page__lead {
     margin: $space-5 0 0;
-    color: $color-accent;
     font-family: $font-serif;
     font-size: clamp(1.08rem, 1.5vw, 20px);
     font-weight: 600;
     line-height: 1.95;
     letter-spacing: 0.04em;
+    color: $color-accent;
   }
 
   .policy-page__body {
-    max-width: $content-max;
     margin: 0 auto;
     padding: 0 $gutter $space-10;
+    max-width: $content-max;
   }
 
   .policy-page__intro {
     margin: 0 0 $space-4;
-    color: $color-text;
     font-family: $font-serif;
     font-size: clamp(1rem, 1.1vw, 1.06rem);
     line-height: 2;
     letter-spacing: 0.04em;
+    color: $color-text;
   }
 
   .policy-page__separator {
+    margin: 0 0 $space-7;
     width: 200px;
     height: 1px;
-    margin: 0 0 $space-7;
     background-color: $color-engi;
   }
 
@@ -179,21 +179,21 @@ const policyItems = [
 
   .policy-section__title {
     margin: 0 0 $space-4;
-    color: $color-accent;
     font-family: $font-serif;
     font-size: clamp(1.22rem, 1.55vw, 1.5rem);
     font-weight: 500;
     line-height: 1.55;
     letter-spacing: 0.05em;
+    color: $color-accent;
   }
 
   .policy-section p {
     margin: 0 0 $space-4;
-    color: $color-text;
     font-family: $font-serif;
     font-size: clamp(1rem, 1.1vw, 1.06rem);
     line-height: 2;
     letter-spacing: 0.04em;
+    color: $color-text;
 
     &:last-child {
       margin-bottom: 0;
@@ -208,14 +208,14 @@ const policyItems = [
 
   .policy-page__footer p {
     margin: 0;
-    color: $color-muted;
     font-family: $font-sans;
     font-size: $fs-meta;
     line-height: $lh-ui;
     letter-spacing: 0.08em;
+    color: $color-muted;
   }
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     .policy-page__hero {
       padding-top: $space-8;
     }

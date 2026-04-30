@@ -93,35 +93,35 @@ const nextHref = currentPage < lastPage ? hrefBuilder(currentPage + 1) : undefin
   @use "../styles/design-tokens.scss" as *;
 
   .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $space-4;
     margin: $space-8 0 $space-9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-4;
   }
 
   .pagination__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     align-items: center;
     gap: $space-2;
-    list-style: none;
-    padding: 0;
-    margin: 0;
   }
 
   .pagination__page {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0 $space-2;
     min-width: 36px;
     height: 36px;
-    padding: 0 $space-2;
-    border: 1px solid $color-engi;
-    background: transparent;
-    color: $color-engi;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     font-family: $font-serif;
     font-size: $fs-small;
     text-decoration: none;
+    color: $color-engi;
+    background: transparent;
+    border: 1px solid $color-engi;
     border-radius: $radius-0;
     transition:
       background $dur-1 $ease,
@@ -130,35 +130,35 @@ const nextHref = currentPage < lastPage ? hrefBuilder(currentPage + 1) : undefin
   }
 
   .pagination__page:hover {
-    background: $color-engi;
     color: $color-engi-ink;
+    background: $color-engi;
     border-radius: 50%;
   }
 
   .pagination__page.is-current {
-    background: $color-engi;
     color: $color-engi-ink;
+    background: $color-engi;
     border-color: $color-engi;
-    pointer-events: none;
     cursor: default;
+    pointer-events: none;
   }
 
   .pagination__ellipsis {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     min-width: 24px;
     height: 36px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     color: $color-muted;
     user-select: none;
   }
 
   .pagination__nav {
-    color: $color-engi;
-    text-decoration: none;
     font-family: $font-serif;
     font-size: $fs-small;
     letter-spacing: $tracking;
+    text-decoration: none;
+    color: $color-engi;
     transition: opacity $dur-1 $ease;
   }
 
