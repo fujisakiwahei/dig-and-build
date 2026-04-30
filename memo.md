@@ -129,7 +129,8 @@ CSSプロパティ順はPrettierではなくStylelintで管理する。
   - サイトマップは初回送信したら2回目以降は自動でやってくれる
 - Search Consoleの認証は、headへのメタタグ埋め込み。今回は環境変数に入れておいた
 - public/robots.txtを作成した
-- GA4のタグを変わった方法でつけた。共通レイアウトのheadの下に。
+- GA4でプロパティを作った
+- GA4のタグを変わった方法で記述。以下でフロントマター内で変数にして共通レイアウトのheadの下に出力。その際エスケープされないように工夫が必要。
 
 ```astro
 const googleTagManagerScript = `

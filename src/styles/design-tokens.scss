@@ -35,7 +35,7 @@ $fg-on-engi: $color-engi-ink;
 // System-font-first. Hiragino Mincho ProN > Yu Mincho fallback.
 $font-serif: "Hiragino Mincho ProN", "HiraMinProN-W3", "Yu Mincho", "YuMincho", "游明朝", "游明朝体", serif;
 $font-sans: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "游ゴシック", system-ui, sans-serif;
-$font-display: "Cormorant Garamond", "Hiragino Mincho ProN", "Yu Mincho", "游明朝", serif;
+$font-display: "Hiragino Mincho ProN", "Yu Mincho", "游明朝", serif;
 
 // ---------- Type scale (editorial, not UI) -----------------
 $fs-display: clamp(2.4rem, 4.8vw, 4rem); // hero

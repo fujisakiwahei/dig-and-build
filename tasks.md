@@ -166,4 +166,4 @@
 - [x] Preview確認
 - [x] 本番デプロイ
 - [x] 独自ドメイン接続
-- [ ] PageSpeed確認
+- [x] PageSpeed確認
