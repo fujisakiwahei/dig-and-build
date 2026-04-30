@@ -20,6 +20,16 @@ const siteUrl = Astro.site ?? new URL("https://dig-and-build.com");
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = new URL(ogImage, siteUrl).toString();
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+const googleTagManagerScript = `
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QWRQ17Y1KS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QWRQ17Y1KS');
+</script>`;
 ---
 
 <!doctype html>
