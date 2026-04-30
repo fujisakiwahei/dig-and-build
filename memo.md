@@ -64,6 +64,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 11. 通知タイミングを設定して保存
 ```
 
+- [画像最適化（公式）](https://help.microcms.io/ja/knowledge/reduce-data-costs)
+
 ## JSの仕様
 
 - `slice(0, 8)`にすると、8投稿目まで取られる。イメージとしては、8でカットするから7まで使う感じで排他。

@@ -1,7 +1,13 @@
 ---
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { client, formatDate } from "../../lib/microcms";
+import {
+  MICROCMS_IMAGE_QUALITY,
+  buildMicroCMSImageSrcSet,
+  buildMicroCMSImageUrl,
+  client,
+  formatDate,
+} from "../../lib/microcms";
 import type { Article, ListResponse } from "../../lib/microcms";
 import facebookIcon from "../../images/icons/icon-facebook.svg?raw";
 import xIcon from "../../images/icons/icon-x.svg?raw";
@@ -30,7 +36,8 @@ const { article } = Astro.props;
 const area = article.area?.[0];
 const prefecture = area?.prefecture?.[0];
 const category = article.category;
-const areaHref = area && prefecture ? `/areas/${prefecture.slug}/${area.slug}/` : "/areas/";
+const areaHref =
+  area && prefecture ? `/areas/${prefecture.slug}/${area.slug}/` : "/areas/";
 const areaNavLinks: { href: string; name: string }[] = [];
 
 for (const articleArea of article.area ?? []) {
@@ -47,13 +54,44 @@ for (const articleArea of article.area ?? []) {
 }
 
 const articlePath = `/articles/${article.slug}/`;
-const canonicalUrl = Astro.site ? new URL(articlePath, Astro.site).toString() : articlePath;
+const canonicalUrl = Astro.site
+  ? new URL(articlePath, Astro.site).toString()
+  : articlePath;
 const encodedUrl = encodeURIComponent(canonicalUrl);
 const encodedTitle = encodeURIComponent(article.title);
 const pageTitle = `${article.title} | Dig and Build`;
+const detailImageWidths = [400, 768, 1024, 1536];
+const detailImageSizes = "(max-width: 1024px) 100vw, 1024px";
+const detailEyecatchImage = article.eyecatch
+  ? {
+      src: buildMicroCMSImageUrl(article.eyecatch.url, {
+        width: 1024,
+        fit: "max",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.detail,
+      }),
+      srcset: buildMicroCMSImageSrcSet(article.eyecatch.url, detailImageWidths, {
+        fit: "max",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.detail,
+      }),
+      ogImage: buildMicroCMSImageUrl(article.eyecatch.url, {
+        width: 1200,
+        height: 630,
+        fit: "crop",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.detail,
+      }),
+    }
+  : undefined;
 ---
 
-<BaseLayout title={pageTitle} description={article.description} ogType="article">
+<BaseLayout
+  title={pageTitle}
+  description={article.description}
+  ogType="article"
+  ogImage={detailEyecatchImage?.ogImage}
+>
   <article class="article-detail">
     <div class="article-detail__layout">
       <div class="article-detail__main">
@@ -65,9 +103,18 @@ const pageTitle = `${article.title} | Dig and Build`;
 
         <div class="article-detail__inner">
           {
-            article.eyecatch && (
+            article.eyecatch && detailEyecatchImage && (
               <figure class="article-detail__eyecatch">
-                <img src={article.eyecatch.url} alt="" loading="eager" decoding="async" width={article.eyecatch.width} height={article.eyecatch.height} />
+                <img
+                  src={detailEyecatchImage.src}
+                  srcset={detailEyecatchImage.srcset}
+                  sizes={detailImageSizes}
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  width={article.eyecatch.width}
+                  height={article.eyecatch.height}
+                />
               </figure>
             )
           }

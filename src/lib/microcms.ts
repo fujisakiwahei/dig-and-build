@@ -19,6 +19,37 @@ export type Eyecatch = {
   width: number;
 };
 
+type MicroCMSImageFit =
+  | "clip"
+  | "crop"
+  | "fill"
+  | "fillmax"
+  | "max"
+  | "min"
+  | "scale";
+
+type MicroCMSImageFormat = "webp";
+
+type MicroCMSImageOptions = {
+  width?: number;
+  height?: number;
+  fit?: MicroCMSImageFit;
+  format?: MicroCMSImageFormat;
+  quality?: number;
+};
+
+type MicroCMSImageSrcSetOptions = MicroCMSImageOptions & {
+  aspectRatio?: {
+    width: number;
+    height: number;
+  };
+};
+
+export const MICROCMS_IMAGE_QUALITY = {
+  list: 50,
+  detail: 80,
+} as const;
+
 export type Prefecture = {
   id: string;
   name: string;
@@ -77,4 +108,60 @@ export function formatDate(iso: string): string {
   const mm = String(d.getMonth() + 1).padStart(2, "0");
   const dd = String(d.getDate()).padStart(2, "0");
   return `${yyyy}.${mm}.${dd}`;
+}
+
+export function buildMicroCMSImageUrl(
+  imageUrl: string,
+  options: MicroCMSImageOptions = {},
+): string {
+  try {
+    const url = new URL(imageUrl);
+
+    if (options.width) {
+      url.searchParams.set("w", String(options.width));
+    }
+
+    if (options.height) {
+      url.searchParams.set("h", String(options.height));
+    }
+
+    if (options.fit) {
+      url.searchParams.set("fit", options.fit);
+    }
+
+    if (options.format) {
+      url.searchParams.set("fm", options.format);
+    }
+
+    if (options.quality) {
+      url.searchParams.set("q", String(options.quality));
+    }
+
+    return url.toString();
+  } catch {
+    return imageUrl;
+  }
+}
+
+export function buildMicroCMSImageSrcSet(
+  imageUrl: string,
+  widths: number[],
+  options: MicroCMSImageSrcSetOptions = {},
+): string {
+  return widths
+    .map((width) => {
+      const height = options.aspectRatio
+        ? Math.round(
+            (width * options.aspectRatio.height) / options.aspectRatio.width,
+          )
+        : options.height;
+      const src = buildMicroCMSImageUrl(imageUrl, {
+        ...options,
+        width,
+        height,
+      });
+
+      return `${src} ${width}w`;
+    })
+    .join(", ");
 }

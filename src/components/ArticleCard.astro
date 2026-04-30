@@ -1,4 +1,9 @@
 ---
+import {
+  MICROCMS_IMAGE_QUALITY,
+  buildMicroCMSImageSrcSet,
+  buildMicroCMSImageUrl,
+} from "../lib/microcms";
 import type { Article } from "../lib/microcms";
 import ArticleMeta from "./ArticleMeta.astro";
 
@@ -9,11 +14,50 @@ interface Props {
 
 const { article, layout = "stack" } = Astro.props;
 const href = `/articles/${article.slug}/`;
+const imageWidths = [400, 768, 1024, 1536];
+const imageSizes =
+  layout === "row"
+    ? "(max-width: 768px) 100vw, 180px"
+    : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+const imageAspectRatio =
+  layout === "row" ? { width: 3, height: 2 } : { width: 4, height: 3 };
+const eyecatchImage = article.eyecatch
+  ? {
+      src: buildMicroCMSImageUrl(article.eyecatch.url, {
+        width: 768,
+        height: Math.round((768 * imageAspectRatio.height) / imageAspectRatio.width),
+        fit: "crop",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.list,
+      }),
+      srcset: buildMicroCMSImageSrcSet(article.eyecatch.url, imageWidths, {
+        fit: "crop",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.list,
+        aspectRatio: imageAspectRatio,
+      }),
+    }
+  : undefined;
 ---
 
 <a class:list={["article-card", `article-card--${layout}`]} href={href}>
   <div class="article-card__thumb">
-    {article.eyecatch ? <img src={article.eyecatch.url} alt="" loading="lazy" width={article.eyecatch.width} height={article.eyecatch.height} /> : <div class="article-card__thumb-placeholder" aria-hidden="true" />}
+    {
+      article.eyecatch && eyecatchImage ? (
+        <img
+          src={eyecatchImage.src}
+          srcset={eyecatchImage.srcset}
+          sizes={imageSizes}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          width={article.eyecatch.width}
+          height={article.eyecatch.height}
+        />
+      ) : (
+        <div class="article-card__thumb-placeholder" aria-hidden="true" />
+      )
+    }
   </div>
 
   <div class="article-card__body">

@@ -1,4 +1,9 @@
 ---
+import {
+  MICROCMS_IMAGE_QUALITY,
+  buildMicroCMSImageSrcSet,
+  buildMicroCMSImageUrl,
+} from "../lib/microcms";
 import type { Article } from "../lib/microcms";
 import ArticleMeta from "./ArticleMeta.astro";
 
@@ -10,7 +15,31 @@ const { article } = Astro.props;
 const href = `/articles/${article.slug}/`;
 
 const excerptMax = 60;
-const excerpt = article.description && (article.description.length > excerptMax ? `${article.description.slice(0, excerptMax)}...` : article.description);
+const excerpt =
+  article.description &&
+  (article.description.length > excerptMax
+    ? `${article.description.slice(0, excerptMax)}...`
+    : article.description);
+const imageWidths = [400, 768, 1024, 1536];
+const imageSizes = "(max-width: 768px) 100vw, 50vw";
+const imageAspectRatio = { width: 4, height: 3 };
+const eyecatchImage = article.eyecatch
+  ? {
+      src: buildMicroCMSImageUrl(article.eyecatch.url, {
+        width: 1024,
+        height: Math.round((1024 * imageAspectRatio.height) / imageAspectRatio.width),
+        fit: "crop",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.list,
+      }),
+      srcset: buildMicroCMSImageSrcSet(article.eyecatch.url, imageWidths, {
+        fit: "crop",
+        format: "webp",
+        quality: MICROCMS_IMAGE_QUALITY.list,
+        aspectRatio: imageAspectRatio,
+      }),
+    }
+  : undefined;
 ---
 
 <section class="featured-article">
@@ -19,7 +48,22 @@ const excerpt = article.description && (article.description.length > excerptMax 
 
     <a class="featured-article__link" href={href}>
       <div class="featured-article__thumb">
-        {article.eyecatch ? <img src={article.eyecatch.url} alt="" loading="eager" width={article.eyecatch.width} height={article.eyecatch.height} /> : <div class="featured-article__thumb-placeholder" aria-hidden="true" />}
+        {
+          article.eyecatch && eyecatchImage ? (
+            <img
+              src={eyecatchImage.src}
+              srcset={eyecatchImage.srcset}
+              sizes={imageSizes}
+              alt=""
+              loading="eager"
+              decoding="async"
+              width={article.eyecatch.width}
+              height={article.eyecatch.height}
+            />
+          ) : (
+            <div class="featured-article__thumb-placeholder" aria-hidden="true" />
+          )
+        }
       </div>
 
       <div class="featured-article__body">
