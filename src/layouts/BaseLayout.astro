@@ -6,14 +6,14 @@ import Header from "../components/Header.astro";
 import ContactCTA from "../components/ContactCTA.astro";
 import Footer from "../components/Footer.astro";
 
-const siteName = "Dig and Build";
-const defaultDescription = "Dig and Buildは、都市の意図を掘り下げるメディアです。建築・再開発・街並みの背景にある思想や物語を読み解きます。";
+const siteName = "Dig&Build";
+const defaultDescription = "Dig&Buildは、都市の意図を掘り下げるメディアです。建築・再開発・街並みの背景にある思想や物語を読み解きます。";
 const {
   title = siteName,
   description = defaultDescription,
   ogType = "website",
   ogImage = "/ogp.webp",
-  ogImageAlt = "Dig and Build",
+  ogImageAlt = "Dig&Build",
 } = Astro.props;
 
 const siteUrl = Astro.site ?? new URL("https://dig-and-build.com");

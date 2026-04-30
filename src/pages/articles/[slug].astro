@@ -50,7 +50,7 @@ const articlePath = `/articles/${article.slug}/`;
 const canonicalUrl = Astro.site ? new URL(articlePath, Astro.site).toString() : articlePath;
 const encodedUrl = encodeURIComponent(canonicalUrl);
 const encodedTitle = encodeURIComponent(article.title);
-const pageTitle = `${article.title} | Dig and Build`;
+const pageTitle = `${article.title} | Dig&Build`;
 const detailImageWidths = [400, 768, 1024, 1536];
 const detailImageSizes = "(max-width: 1024px) 100vw, 1024px";
 const detailEyecatchImage = article.eyecatch
@@ -172,7 +172,7 @@ const detailEyecatchImage = article.eyecatch
 
   if (shareRoot && copyButton) {
     const currentUrl = window.location.href;
-    const currentTitle = document.title.replace(" | Dig and Build", "");
+    const currentTitle = document.title.replace(" | Dig&Build", "");
 
     xLink?.setAttribute("href", `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`);
     facebookLink?.setAttribute("href", `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`);

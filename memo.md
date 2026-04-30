@@ -18,8 +18,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Dig and Build">
-  <h1>Dig and Build</h1>
+<BaseLayout title="Dig&Build">
+  <h1>Dig&Build</h1>
 </BaseLayout>
 
 ```

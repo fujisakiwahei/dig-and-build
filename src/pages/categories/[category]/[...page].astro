@@ -71,7 +71,7 @@ const hasMain = page.data.length > 0;
 const hrefBuilder = (n: number) =>
   n === 1 ? `/categories/${category}` : `/categories/${category}/${n}`;
 
-const baseDescription = `${categoryName} に関する記事の一覧。Dig and Build が伝える ${categoryName} の街・建築の物語をお届けします。`;
+const baseDescription = `${categoryName} に関する記事の一覧。Dig&Build が伝える ${categoryName} の街・建築の物語をお届けします。`;
 const pageDescription =
   page.currentPage > 1
     ? `${baseDescription}（${page.currentPage}ページ目）`
@@ -79,7 +79,7 @@ const pageDescription =
 ---
 
 <BaseLayout
-  title={`カテゴリ/${categoryName} | Dig and Build`}
+  title={`カテゴリ/${categoryName} | Dig&Build`}
   description={pageDescription}
 >
   <div class="home-layout">
