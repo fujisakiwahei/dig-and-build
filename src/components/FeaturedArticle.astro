@@ -58,26 +58,6 @@ const eyecatchImage = article.eyecatch
 
   .featured-article {
     width: 100%;
-
-    @media (hover: hover) {
-      &:hover {
-        .featured-article__thumb {
-          border-radius: 0 20px 20px;
-
-          img {
-            transform: scale(1.1);
-          }
-        }
-
-        .featured-article__more {
-          border-color: $color-engi;
-        }
-
-        .featured-article__title {
-          color: $color-engi;
-        }
-      }
-    }
   }
 
   .featured-article__inner {
@@ -102,6 +82,26 @@ const eyecatchImage = article.eyecatch
     grid-template-columns: 1fr 1fr;
     text-decoration: none;
     color: inherit;
+
+    @media (hover: hover) {
+      &:hover {
+        .featured-article__thumb {
+          border-radius: 0 20px 20px;
+
+          img {
+            transform: scale(1.1);
+          }
+        }
+
+        .featured-article__more {
+          border-color: $color-engi;
+        }
+
+        .featured-article__title {
+          color: $color-engi;
+        }
+      }
+    }
   }
 
   .featured-article__thumb {
