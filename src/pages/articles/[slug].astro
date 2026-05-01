@@ -142,18 +142,30 @@ const detailEyecatchImage = article.eyecatch
         <nav class="article-detail__nav" aria-label="記事ナビゲーション">
           <a class="article-detail__nav-link" href="/articles/page/">記事一覧に戻る</a>
           {
-            category && (
-              <a class="article-detail__nav-link" href={`/categories/${category.slug}/`}>
-                「{category.name}」の記事一覧に戻る
-              </a>
+            (category || areaLinks.length > 0) && (
+              <ul class="article-detail__nav-secondary">
+                {category && (
+                  <li>
+                    <a
+                      class="article-detail__nav-link article-detail__nav-text"
+                      href={`/categories/${category.slug}/`}
+                    >
+                      「{category.name}」の記事一覧に戻る
+                    </a>
+                  </li>
+                )}
+                {areaLinks.map((areaLink) => (
+                  <li>
+                    <a
+                      class="article-detail__nav-link article-detail__nav-text"
+                      href={areaLink.href}
+                    >
+                      「{areaLink.name}」の記事一覧に戻る
+                    </a>
+                  </li>
+                ))}
+              </ul>
             )
-          }
-          {
-            areaLinks.map((areaLink) => (
-              <a class="article-detail__nav-link" href={areaLink.href}>
-                「{areaLink.name}」の記事一覧に戻る
-              </a>
-            ))
           }
         </nav>
       </aside>
@@ -540,17 +552,17 @@ const detailEyecatchImage = article.eyecatch
     border: 1px solid rgb(107 31 36 / 28%);
     border-radius: 0;
     transition:
-      color $dur-2 $ease,
-      background-color $dur-2 $ease,
-      border-color $dur-2 $ease,
-      border-radius $dur-2 $ease;
+      color $dur-3 $ease,
+      background-color $dur-3 $ease,
+      border-color $dur-3 $ease,
+      border-radius $dur-3 $ease;
     cursor: pointer;
 
     &:hover {
       color: $color-engi-ink;
       background-color: $color-engi;
       border-color: $color-engi;
-      border-radius: 24px;
+      border-radius: 28px;
     }
   }
 
@@ -605,6 +617,17 @@ const detailEyecatchImage = article.eyecatch
     }
   }
 
+  .article-detail__nav-secondary,
+  .article-detail__nav-secondary > li {
+    display: contents;
+  }
+
+  .article-detail__nav-secondary {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
   @media (width >= 1024px) {
     .article-detail__layout {
       max-width: $content-wider;
@@ -657,12 +680,17 @@ const detailEyecatchImage = article.eyecatch
     .article-share__buttons {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr;
+      gap: $space-2;
+      grid-template-columns: 1fr 1fr;
     }
 
     .article-share__button {
       width: 100%;
       min-height: 56px;
+    }
+
+    [data-share-copy] {
+      grid-column: 1 / -1;
     }
 
     .article-share__button--icon {
@@ -672,6 +700,51 @@ const detailEyecatchImage = article.eyecatch
     .article-detail__nav {
       margin-top: $space-6;
       grid-template-columns: 1fr;
+    }
+
+    .article-detail__nav-secondary {
+      margin-top: $space-4;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .article-detail__nav-secondary > li {
+      display: list-item;
+    }
+
+    .article-detail__nav-link.article-detail__nav-text {
+      padding: 0;
+      min-height: 0;
+      justify-content: flex-start;
+      gap: 0.5em;
+      letter-spacing: 0.06em;
+      text-align: left;
+      color: $color-engi;
+      background-color: transparent;
+      border-radius: 0;
+      transition:
+        color $dur-2 $ease,
+        text-decoration-color $dur-2 $ease;
+      text-underline-offset: 0.25em;
+
+      &::before {
+        content: "←";
+        display: inline-block;
+        transition: transform $dur-2 $ease;
+      }
+
+      &:hover {
+        text-decoration: underline;
+        color: $color-engi-deep;
+        background-color: transparent;
+        border-radius: 0;
+        text-decoration-thickness: 1px;
+
+        &::before {
+          transform: translateX(-2px);
+        }
+      }
     }
 
     .article-content :global(figure) {
