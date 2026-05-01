@@ -27,11 +27,8 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const area = article.area?.[0];
-const prefecture = area?.prefecture?.[0];
 const category = article.category;
-const areaHref = area && prefecture ? `/areas/${prefecture.slug}/${area.slug}/` : "/areas/";
-const areaNavLinks: { href: string; name: string }[] = [];
+const areaLinks: { href: string; name: string; prefectureName: string }[] = [];
 
 for (const articleArea of article.area ?? []) {
   const articlePrefecture = articleArea.prefecture?.[0];
@@ -40,9 +37,10 @@ for (const articleArea of article.area ?? []) {
     continue;
   }
 
-  areaNavLinks.push({
+  areaLinks.push({
     href: `/areas/${articlePrefecture.slug}/${articleArea.slug}/`,
     name: articleArea.name,
+    prefectureName: articlePrefecture.name,
   });
 }
 
@@ -99,12 +97,12 @@ const detailEyecatchImage = article.eyecatch
           <div class="article-detail__meta" aria-label="記事情報">
             <div class="article-detail__terms">
               {
-                area && (
-                  <a class="article-detail__term" href={areaHref}>
-                    {prefecture?.name && <span class="article-detail__term-prefix">{prefecture.name} /</span>}
-                    <span class="article-detail__term-name">{area.name}</span>
+                areaLinks.map((areaLink) => (
+                  <a class="article-detail__term" href={areaLink.href}>
+                    <span class="article-detail__term-prefix">{areaLink.prefectureName} /</span>
+                    <span class="article-detail__term-name">{areaLink.name}</span>
                   </a>
-                )
+                ))
               }
               {
                 category && (
@@ -151,9 +149,9 @@ const detailEyecatchImage = article.eyecatch
             )
           }
           {
-            areaNavLinks.map((areaNavLink) => (
-              <a class="article-detail__nav-link" href={areaNavLink.href}>
-                「{areaNavLink.name}」の記事一覧に戻る
+            areaLinks.map((areaLink) => (
+              <a class="article-detail__nav-link" href={areaLink.href}>
+                「{areaLink.name}」の記事一覧に戻る
               </a>
             ))
           }
