@@ -174,18 +174,26 @@ const detailEyecatchImage = article.eyecatch
 </BaseLayout>
 
 <script>
-  const shareRoot = document.querySelector("[data-article-share]");
-  const status = document.querySelector("[data-share-status]");
-  const copyButton = document.querySelector("[data-share-copy]");
-  const xLink = document.querySelector("[data-share-x]");
-  const facebookLink = document.querySelector("[data-share-facebook]");
+  function initShare() {
+    const shareRoot = document.querySelector("[data-article-share]");
+    const status = document.querySelector("[data-share-status]");
+    const copyButton = document.querySelector("[data-share-copy]");
+    const xLink = document.querySelector("[data-share-x]");
+    const facebookLink = document.querySelector("[data-share-facebook]");
 
-  if (shareRoot && copyButton) {
+    if (!shareRoot || !copyButton) return;
+
     const currentUrl = window.location.href;
     const currentTitle = document.title.replace(" | Dig&Build", "");
 
-    xLink?.setAttribute("href", `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`);
-    facebookLink?.setAttribute("href", `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`);
+    xLink?.setAttribute(
+      "href",
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`,
+    );
+    facebookLink?.setAttribute(
+      "href",
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+    );
 
     copyButton.addEventListener("click", async () => {
       try {
@@ -200,6 +208,8 @@ const detailEyecatchImage = article.eyecatch
       }
     });
   }
+
+  document.addEventListener("astro:page-load", initShare);
 </script>
 
 <style lang="scss">
