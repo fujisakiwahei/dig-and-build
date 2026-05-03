@@ -1,17 +1,17 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { client } from "../lib/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { client } from "@/lib/microcms";
 import type {
   Article,
   Area,
   Category,
   ListResponse,
   Prefecture,
-} from "../lib/microcms";
-import FeaturedArticle from "../components/FeaturedArticle.astro";
-import ArticleGrid from "../components/ArticleGrid.astro";
-import SidebarCategoryList from "../components/SidebarCategoryList.astro";
-import SidebarAreaList from "../components/SidebarAreaList.astro";
+} from "@/lib/microcms";
+import FeaturedArticle from "@/components/FeaturedArticle.astro";
+import ArticleGrid from "@/components/ArticleGrid.astro";
+import SidebarCategoryList from "@/components/SidebarCategoryList.astro";
+import SidebarAreaList from "@/components/SidebarAreaList.astro";
 
 // SSGなのでサーバーサイドで実行
 const featuredPost = await client.get<ListResponse<Article>>({

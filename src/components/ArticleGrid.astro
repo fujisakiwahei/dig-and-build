@@ -1,6 +1,6 @@
 ---
-import type { Article } from "../lib/microcms";
-import ArticleCard from "./ArticleCard.astro";
+import type { Article } from "@/lib/microcms";
+import ArticleCard from "@/components/ArticleCard.astro";
 
 interface Props {
   articles: Article[];
@@ -26,7 +26,7 @@ const { articles, heading } = Astro.props;
 }
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .article-grid {
     width: 100%;

@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { client } from "../../lib/microcms";
-import type { Article, ListResponse } from "../../lib/microcms";
-import ArticleArchivePage from "../../components/ArticleArchivePage.astro";
+import { client } from "@/lib/microcms";
+import type { Article, ListResponse } from "@/lib/microcms";
+import ArticleArchivePage from "@/components/ArticleArchivePage.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const res = await client.get<ListResponse<Article>>({

@@ -1,19 +1,19 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { client } from "../../../lib/microcms";
+import { client } from "@/lib/microcms";
 import type {
   Article,
   Area,
   Category,
   ListResponse,
   Prefecture,
-} from "../../../lib/microcms";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import PageTitle from "../../../components/PageTitle.astro";
-import ArticleGrid from "../../../components/ArticleGrid.astro";
-import SidebarCategoryList from "../../../components/SidebarCategoryList.astro";
-import SidebarAreaList from "../../../components/SidebarAreaList.astro";
-import Pagination from "../../../components/Pagination.astro";
+} from "@/lib/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageTitle from "@/components/PageTitle.astro";
+import ArticleGrid from "@/components/ArticleGrid.astro";
+import SidebarCategoryList from "@/components/SidebarCategoryList.astro";
+import SidebarAreaList from "@/components/SidebarAreaList.astro";
+import Pagination from "@/components/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const cats = await client.get<ListResponse<Category>>({
@@ -113,7 +113,7 @@ const pageDescription =
 </BaseLayout>
 
 <style lang="scss">
-  @use "../../../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .articles-list__empty {
     margin: 0;

@@ -1,10 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { MICROCMS_IMAGE_QUALITY, buildMicroCMSImageSrcSet, buildMicroCMSImageUrl, client, formatDate } from "../../lib/microcms";
-import type { Article, ListResponse } from "../../lib/microcms";
-import facebookIcon from "../../images/icons/icon-facebook.svg?raw";
-import xIcon from "../../images/icons/icon-x.svg?raw";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { MICROCMS_IMAGE_QUALITY, buildMicroCMSImageSrcSet, buildMicroCMSImageUrl, client, formatDate } from "@/lib/microcms";
+import type { Article, ListResponse } from "@/lib/microcms";
+import facebookIcon from "@/images/icons/icon-facebook.svg?raw";
+import xIcon from "@/images/icons/icon-x.svg?raw";
 
 export const getStaticPaths = (async () => {
   const res = await client.get<ListResponse<Article>>({
@@ -213,7 +213,7 @@ const detailEyecatchImage = article.eyecatch
 </script>
 
 <style lang="scss">
-  @use "../../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .article-detail {
     color: $color-text;

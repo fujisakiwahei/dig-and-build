@@ -1,10 +1,10 @@
 ---
-import { client } from "../../lib/microcms";
-import type { Category, ListResponse } from "../../lib/microcms";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/PageHero.astro";
-import CategoryList from "../../components/CategoryList.astro";
-import heroImg from "../../images/hero/articles.webp";
+import { client } from "@/lib/microcms";
+import type { Category, ListResponse } from "@/lib/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/PageHero.astro";
+import CategoryList from "@/components/CategoryList.astro";
+import heroImg from "@/images/hero/articles.webp";
 
 const categories = await client.get<ListResponse<Category>>({
   endpoint: "categories",

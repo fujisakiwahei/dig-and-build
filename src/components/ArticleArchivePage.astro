@@ -6,13 +6,13 @@ import type {
   Category,
   ListResponse,
   Prefecture,
-} from "../lib/microcms";
-import { client } from "../lib/microcms";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ArticleGrid from "./ArticleGrid.astro";
-import SidebarCategoryList from "./SidebarCategoryList.astro";
-import SidebarAreaList from "./SidebarAreaList.astro";
-import Pagination from "./Pagination.astro";
+} from "@/lib/microcms";
+import { client } from "@/lib/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ArticleGrid from "@/components/ArticleGrid.astro";
+import SidebarCategoryList from "@/components/SidebarCategoryList.astro";
+import SidebarAreaList from "@/components/SidebarAreaList.astro";
+import Pagination from "@/components/Pagination.astro";
 
 interface Props {
   page: Page<Article>;
@@ -87,7 +87,7 @@ const articlePageHref = (n: number) =>
 </BaseLayout>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .articles-list__empty {
     margin: 0;

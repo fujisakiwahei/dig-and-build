@@ -1,10 +1,10 @@
 ---
-import { client } from "../../lib/microcms";
-import type { Area, Prefecture, ListResponse } from "../../lib/microcms";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/PageHero.astro";
-import AreaList from "../../components/AreaList.astro";
-import heroImg from "../../images/hero/areas.webp";
+import { client } from "@/lib/microcms";
+import type { Area, Prefecture, ListResponse } from "@/lib/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHero from "@/components/PageHero.astro";
+import AreaList from "@/components/AreaList.astro";
+import heroImg from "@/images/hero/areas.webp";
 
 const prefectures = await client.get<ListResponse<Prefecture>>({
   endpoint: "prefectures",

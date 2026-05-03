@@ -1,6 +1,6 @@
 ---
-import type { Article } from "../lib/microcms";
-import { formatDate } from "../lib/microcms";
+import type { Article } from "@/lib/microcms";
+import { formatDate } from "@/lib/microcms";
 
 interface Props {
   article: Article;
@@ -30,7 +30,7 @@ const category = article.category;
 </div>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .article-meta {
     display: flex;

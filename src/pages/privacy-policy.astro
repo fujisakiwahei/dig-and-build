@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const policyItems = [
   {
@@ -106,7 +106,7 @@ const policyItems = [
 </BaseLayout>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .policy-page {
     color: $color-text;

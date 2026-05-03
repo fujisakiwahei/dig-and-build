@@ -3,9 +3,9 @@ import {
   MICROCMS_IMAGE_QUALITY,
   buildMicroCMSImageSrcSet,
   buildMicroCMSImageUrl,
-} from "../lib/microcms";
-import type { Article } from "../lib/microcms";
-import ArticleMeta from "./ArticleMeta.astro";
+} from "@/lib/microcms";
+import type { Article } from "@/lib/microcms";
+import ArticleMeta from "@/components/ArticleMeta.astro";
 
 interface Props {
   article: Article;
@@ -68,7 +68,7 @@ const eyecatchImage = article.eyecatch
 </a>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .article-card {
     display: block;

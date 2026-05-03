@@ -1,5 +1,5 @@
 ---
-import type { Area, Prefecture } from "../lib/microcms";
+import type { Area, Prefecture } from "@/lib/microcms";
 
 interface Props {
   prefectures: Prefecture[];
@@ -35,7 +35,7 @@ const groups = prefectures.map((prefecture) => ({
 </section>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .sidebar-areas__label {
     margin-bottom: 18px;

@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const title = "ページが見つかりません | Dig&Build";
 const description =
@@ -18,15 +18,15 @@ const description =
 </BaseLayout>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .not-found {
+    padding: $space-9 $gutter;
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 70vh;
-    padding: $space-9 $gutter;
+    align-items: center;
     text-align: center;
   }
 
@@ -64,13 +64,13 @@ const description =
   }
 
   .not-found__link {
+    padding-bottom: 2px;
     font-family: $font-serif;
     font-size: $fs-body;
     letter-spacing: 0.06em;
-    color: $color-engi;
     text-decoration: none;
+    color: $color-engi;
     border-bottom: 1px solid $color-engi;
-    padding-bottom: 2px;
     transition: color $dur-1 $ease;
 
     &:hover {
@@ -80,8 +80,8 @@ const description =
 
   @media (width <= 768px) {
     .not-found {
-      min-height: 60vh;
       padding: $space-8 $gutter;
+      min-height: 60vh;
     }
   }
 </style>

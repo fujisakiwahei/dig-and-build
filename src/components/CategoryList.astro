@@ -1,5 +1,5 @@
 ---
-import type { Category } from "../lib/microcms";
+import type { Category } from "@/lib/microcms";
 
 interface Props {
   categories: Category[];
@@ -31,7 +31,7 @@ const { categories } = Astro.props;
 </section>
 
 <style lang="scss">
-  @use "../styles/design-tokens.scss" as *;
+  @use "@/styles/design-tokens.scss" as *;
 
   .category-list {
     width: 100%;
