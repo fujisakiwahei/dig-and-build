@@ -2,19 +2,23 @@
 import type { Article } from "@/lib/microcms";
 import ArticleCard from "@/components/ArticleCard.astro";
 
+type HeadingTag = "h1" | "h2";
+
 interface Props {
   articles: Article[];
   heading?: string;
+  headingTag?: HeadingTag;
 }
 
-const { articles, heading } = Astro.props;
+const { articles, heading, headingTag = "h2" } = Astro.props;
+const HeadingElement = headingTag;
 ---
 
 {
   articles.length > 0 && (
     <section class="article-grid">
       <div class="article-grid__inner">
-        {heading && <h2 class="article-grid__label">【 {heading} 】</h2>}
+        {heading && <HeadingElement class="article-grid__label">【 {heading} 】</HeadingElement>}
         <div class="article-grid__grid">
           {articles.map((article) => (
             <ArticleCard article={article} />

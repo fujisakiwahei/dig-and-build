@@ -73,7 +73,7 @@ const articlePageHref = (n: number) =>
         )}
         {hasMain && (
           <div class="home-layout__main">
-            <ArticleGrid articles={articles} heading="記事一覧" />
+            <ArticleGrid articles={articles} heading="記事一覧" headingTag="h1" />
             {lastPage > 1 && (
               <Pagination page={page} hrefBuilder={articlePageHref} />
             )}

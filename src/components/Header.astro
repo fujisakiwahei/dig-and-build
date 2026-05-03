@@ -6,11 +6,14 @@ const navItems = [
 ];
 
 const currentPath = Astro.url.pathname;
+const LogoElement = currentPath === "/" ? "h1" : "p";
 ---
 
 <header class="site-header">
   <nav class="site-header__nav" aria-label="グローバルナビゲーション">
-    <a class="site-header__wordmark" href="/" aria-label="Dig&amp;Build トップへ"> Dig&amp;Build </a>
+    <LogoElement class="site-header__wordmark-heading">
+      <a class="site-header__wordmark" href="/" aria-label="Dig&amp;Build トップへ"> Dig&amp;Build </a>
+    </LogoElement>
 
     <ul class="site-header__links">
       {
@@ -48,6 +51,11 @@ const currentPath = Astro.url.pathname;
     border-bottom: 1px solid $color-border;
   }
 
+  .site-header__wordmark-heading {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
   .site-header__wordmark {
     font-family: $font-display;
     font-size: 22px;
@@ -55,7 +63,6 @@ const currentPath = Astro.url.pathname;
     text-decoration: none;
     white-space: nowrap;
     color: $color-engi;
-    flex-shrink: 0;
   }
 
   .site-header__links {
