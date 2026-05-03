@@ -19,4 +19,8 @@ export default defineConfig({
       filter: (page) => !page.includes("/404"),
     }),
   ],
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "viewport",
+  },
 });
