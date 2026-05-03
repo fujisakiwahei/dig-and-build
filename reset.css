@@ -1,8 +1,5 @@
 @charset "UTF-8";
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+
 html,
 body,
 div,
@@ -86,9 +83,9 @@ audio,
 video {
   margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
   font: inherit;
+  font-size: 100%;
+  border: 0;
   vertical-align: baseline;
   box-sizing: border-box; /* box-sizingを追加すると便利です */
 }
@@ -122,10 +119,10 @@ q {
   quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
   content: "";
   content: none;
 }
@@ -145,41 +142,41 @@ img {
 }
 
 /* ----------------------------------- */
+
 /* --- フォーム要素のリセットCSS --- */
+
 /* ----------------------------------- */
 input,
 button,
 textarea,
 select {
-  -webkit-appearance: none; /* Safari, Chromeなどのベンダープレフィックス */
-  -moz-appearance: none; /* Firefox */
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
+  margin: 0;
+  padding: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   color: inherit;
-  padding: 0;
-  margin: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  appearance: none;
 }
 
 /* buttonとinput[type="button"]などにカーソルをポインターに */
 button,
-input[type=button],
-input[type=submit],
-input[type=reset] {
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
   cursor: pointer;
 }
 
 /* iOSでの内側の影を削除 */
-input[type=text],
-input[type=email],
-input[type=search],
-input[type=password],
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
 textarea {
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 /* selectの矢印を非表示にする（基本的なリセット） */
@@ -191,4 +188,4 @@ select::-ms-expand {
 /* textareaのリサイズを無効化（必要に応じて縦(vertical)や横(horizontal)に設定） */
 textarea {
   resize: none;
-}/*# sourceMappingURL=reset.css.map */
+}

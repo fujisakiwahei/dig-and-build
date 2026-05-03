@@ -1,5 +1,12 @@
 ---
-import type { Article, Area, Category, ListResponse, Prefecture } from "../lib/microcms";
+import type { Page } from "astro";
+import type {
+  Article,
+  Area,
+  Category,
+  ListResponse,
+  Prefecture,
+} from "../lib/microcms";
 import { client } from "../lib/microcms";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ArticleGrid from "./ArticleGrid.astro";
@@ -8,13 +15,13 @@ import SidebarAreaList from "./SidebarAreaList.astro";
 import Pagination from "./Pagination.astro";
 
 interface Props {
-  articles: Article[];
-  currentPage: number;
-  lastPage: number;
+  page: Page<Article>;
   description?: string;
 }
 
-const { articles, currentPage, lastPage, description } = Astro.props;
+const { page, description } = Astro.props;
+const { currentPage, lastPage } = page;
+const articles = page.data;
 
 const defaultDescription =
   "Dig&Build の記事一覧。都市・建築・街の変化を伝える最新記事を一覧で確認できます。";
@@ -43,7 +50,8 @@ const hasSidebar =
   categories.contents.length > 0 ||
   (prefectures.contents.length > 0 && areas.contents.length > 0);
 const hasMain = articles.length > 0;
-const articlePageHref = (n: number) => (n === 1 ? "/articles/page/" : `/articles/page/${n}/`);
+const articlePageHref = (n: number) =>
+  n === 1 ? "/articles/" : `/articles/${n}/`;
 ---
 
 <BaseLayout title="記事一覧 | Dig&Build" description={pageDescription}>
@@ -67,11 +75,7 @@ const articlePageHref = (n: number) => (n === 1 ? "/articles/page/" : `/articles
           <div class="home-layout__main">
             <ArticleGrid articles={articles} heading="記事一覧" />
             {lastPage > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                lastPage={lastPage}
-                hrefBuilder={articlePageHref}
-              />
+              <Pagination page={page} hrefBuilder={articlePageHref} />
             )}
           </div>
         )}

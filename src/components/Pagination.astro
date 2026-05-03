@@ -2,20 +2,17 @@
 import type { Page } from "astro";
 
 interface Props {
-  page?: Page<unknown>;
+  page: Page<unknown>;
   baseLabel?: string;
-  currentPage?: number;
-  lastPage?: number;
   hrefBuilder?: (n: number) => string;
 }
 
 const {
   page,
   baseLabel = "ページネーション",
-  currentPage = page?.currentPage ?? 1,
-  lastPage = page?.lastPage ?? 1,
-  hrefBuilder = (n: number) => (n === 1 ? "/articles/page/" : `/articles/page/${n}/`),
+  hrefBuilder = (n: number) => (n === 1 ? "/articles/" : `/articles/${n}/`),
 } = Astro.props;
+const { currentPage, lastPage } = page;
 
 type Item = number | "ellipsis";
 
@@ -33,8 +30,8 @@ function buildPageItems(current: number, last: number): Item[] {
 }
 
 const items = buildPageItems(currentPage, lastPage);
-const prevHref = currentPage > 1 ? hrefBuilder(currentPage - 1) : undefined;
-const nextHref = currentPage < lastPage ? hrefBuilder(currentPage + 1) : undefined;
+const prevHref = page.url.prev;
+const nextHref = page.url.next;
 ---
 
 <nav class="pagination" aria-label={baseLabel}>

@@ -66,7 +66,7 @@
 ## 6. ページ実装
 
 - [x] トップページ `/` を作成する
-- [x] 記事一覧 `/articles/page/` を作成する
+- [x] 記事一覧 `/articles/` を作成する
 - [x] 記事詳細 `/articles/[slug]/` を作成する
 - [x] カテゴリー一覧 `/categories/` を作成する
 - [x] カテゴリー `/categories/[category]/` を作成する

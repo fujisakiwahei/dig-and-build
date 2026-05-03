@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import { client } from "../../lib/microcms";
+import type { Article, ListResponse } from "../../lib/microcms";
+import ArticleArchivePage from "../../components/ArticleArchivePage.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const res = await client.get<ListResponse<Article>>({
+    endpoint: "articles",
+    queries: {
+      orders: "-publishedAt",
+      limit: 100,
+      depth: 2,
+    },
+  });
+
+  return paginate(res.contents, {
+    pageSize: 18,
+  });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props as {
+  page: import("astro").Page<Article>;
+};
+---
+
+<ArticleArchivePage page={page} />
