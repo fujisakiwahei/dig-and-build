@@ -39,6 +39,10 @@ const inquiryOptions = [
 
     <div class="contact-page__body">
       <form id="contact-form" class="contact-form" novalidate>
+        <div class="contact-form__turnstile">
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+        </div>
+
         <div class="contact-form__field">
           <label class="contact-form__label" for="organization">所属・会社名</label>
           <input id="organization" class="contact-form__input" name="organization" type="text" maxlength="120" autocomplete="organization" />
@@ -87,10 +91,6 @@ const inquiryOptions = [
         <div class="contact-form__honeypot" aria-hidden="true">
           <label for="website">Webサイト</label>
           <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-
-        <div class="contact-form__turnstile">
-          <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
         </div>
 
         <p id="contact-form-status" class="contact-form__status" aria-live="polite"></p>
@@ -423,7 +423,7 @@ const inquiryOptions = [
     min-height: 57px;
     display: inline-flex;
     justify-content: center;
-    justify-self: start;
+    justify-self: center;
     align-items: center;
     gap: $space-3;
     font-family: $font-display;
