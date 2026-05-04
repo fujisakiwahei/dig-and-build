@@ -41,7 +41,11 @@ const FIELD_LIMITS = {
   message: 4000,
 };
 
-export default async function contact(request: Request): Promise<Response> {
+export default {
+  fetch: handleContactRequest,
+};
+
+async function handleContactRequest(request: Request): Promise<Response> {
   // Vercel Functionは公開URLになるため、フォーム送信用のPOSTだけを受け付ける。
   if (request.method !== "POST") {
     return jsonResponse(
