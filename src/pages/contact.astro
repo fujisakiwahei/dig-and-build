@@ -1,17 +1,19 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
+const turnstileSiteKey = "0x4AAAAAADI3C6Y7Tf4qZwdd";
+
 const inquiryOptions = [
   {
-    value: "取材依頼",
+    value: "取材してほしい",
     help: "街や建築、再開発に関する取材のご依頼はこちらをお選びください。対象、時期、企画の背景が分かる範囲で記載ください。",
   },
   {
-    value: "広告掲載",
+    value: "広告を掲載したい",
     help: "広告掲載やタイアップ企画のご相談はこちらをお選びください。商材、希望時期、想定している掲載内容があればお知らせください。",
   },
   {
-    value: "寄稿",
+    value: "寄稿したい・してほしい",
     help: "寄稿や情報提供のご相談はこちらをお選びください。テーマ、略歴、参考資料がある場合は本文に概要を記載ください。",
   },
   {
@@ -37,6 +39,11 @@ const inquiryOptions = [
 
     <div class="contact-page__body">
       <form id="contact-form" class="contact-form" novalidate>
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="organization">所属・会社名</label>
+          <input id="organization" class="contact-form__input" name="organization" type="text" maxlength="120" autocomplete="organization" />
+        </div>
+
         <div class="contact-form__grid">
           <div class="contact-form__field">
             <label class="contact-form__label" for="name">お名前<span>必須</span></label>
@@ -47,11 +54,6 @@ const inquiryOptions = [
             <label class="contact-form__label" for="email">メールアドレス<span>必須</span></label>
             <input id="email" class="contact-form__input" name="email" type="email" maxlength="254" autocomplete="email" required />
           </div>
-        </div>
-
-        <div class="contact-form__field">
-          <label class="contact-form__label" for="organization">所属・会社名</label>
-          <input id="organization" class="contact-form__input" name="organization" type="text" maxlength="120" autocomplete="organization" />
         </div>
 
         <div class="contact-form__field">
@@ -78,11 +80,6 @@ const inquiryOptions = [
         </div>
 
         <div class="contact-form__field">
-          <label class="contact-form__label" for="subject">件名<span>必須</span></label>
-          <input id="subject" class="contact-form__input" name="subject" type="text" maxlength="120" required />
-        </div>
-
-        <div class="contact-form__field">
           <label class="contact-form__label" for="message">お問い合わせ内容<span>必須</span></label>
           <textarea id="message" class="contact-form__textarea" name="message" maxlength="4000" rows="9" required></textarea>
         </div>
@@ -90,6 +87,10 @@ const inquiryOptions = [
         <div class="contact-form__honeypot" aria-hidden="true">
           <label for="website">Webサイト</label>
           <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="contact-form__turnstile">
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
         </div>
 
         <p id="contact-form-status" class="contact-form__status" aria-live="polite"></p>
@@ -105,6 +106,7 @@ const inquiryOptions = [
     </div>
   </article>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script is:inline>
     (() => {
       const form = document.querySelector("#contact-form");
@@ -150,14 +152,21 @@ const inquiryOptions = [
         }
 
         const formData = new FormData(form);
+        const turnstileToken = String(formData.get("cf-turnstile-response") ?? "");
+
+        if (!turnstileToken) {
+          setStatus("認証を完了してから送信してください。", "error");
+          return;
+        }
+
         const payload = {
           name: String(formData.get("name") ?? ""),
           email: String(formData.get("email") ?? ""),
           organization: String(formData.get("organization") ?? ""),
           inquiryType: String(formData.get("inquiryType") ?? ""),
-          subject: String(formData.get("subject") ?? ""),
           message: String(formData.get("message") ?? ""),
           website: String(formData.get("website") ?? ""),
+          turnstileToken,
         };
 
         setSubmitting(true);
@@ -181,7 +190,10 @@ const inquiryOptions = [
 
           form.reset();
           updateInquiryHelp();
-          setStatus("お問い合わせを送信しました。内容を確認のうえ、必要に応じて返信します。", "success");
+          if (window.turnstile) {
+            window.turnstile.reset();
+          }
+          setStatus("お問い合わせの送信が完了しました。ありがとうございます！", "success");
         } catch {
           setStatus("通信に失敗しました。時間をおいて再度お試しください。", "error");
         } finally {
@@ -399,6 +411,10 @@ const inquiryOptions = [
     width: 1px;
     height: 1px;
     overflow: hidden;
+  }
+
+  .contact-form__turnstile {
+    min-height: 65px;
   }
 
   .contact-form__submit {
