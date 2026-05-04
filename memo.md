@@ -144,3 +144,18 @@ const googleTagManagerScript = `
   gtag('config', 'G-QWRQ17Y1KS');
 </script>`;
 ```
+
+### Resendでフォーム作成
+
+- ネームサーバーDNS設定本来は手動でやるかと思ったが、VercelにDNS設定をしているからかVercelが勝手にやってくれた。
+- 環境変数はこれ
+
+```txt
+RESEND_API_KEY
+CONTACT_FROM_EMAIL
+CONTACT_TO_EMAIL
+BCC_EMAIL
+```
+
+- サーバーサイドAPIは、SSGなのでプロジェクト内に入れると動かない。ルートにおいてVercelのFunctionとした。
+- バリデーションはAIにやらせた。ここも提携にしておくと良さそう。フロントとバック両方

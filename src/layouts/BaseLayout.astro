@@ -15,6 +15,7 @@ const {
   ogType = "website",
   ogImage = "/ogp.webp",
   ogImageAlt = "Dig&Build",
+  showContactCTA = true,
 } = Astro.props;
 
 const siteUrl = Astro.site ?? new URL("https://dig-and-build.com");
@@ -85,7 +86,7 @@ const googleTagManagerScript = `
     <main>
       <slot />
     </main>
-    <ContactCTA transition:persist />
+    {showContactCTA && <ContactCTA transition:persist />}
     <Footer transition:persist />
   </body>
 </html>

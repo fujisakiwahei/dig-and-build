@@ -1,0 +1,483 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const inquiryOptions = [
+  {
+    value: "取材依頼",
+    help: "街や建築、再開発に関する取材のご依頼はこちらをお選びください。対象、時期、企画の背景が分かる範囲で記載ください。",
+  },
+  {
+    value: "広告掲載",
+    help: "広告掲載やタイアップ企画のご相談はこちらをお選びください。商材、希望時期、想定している掲載内容があればお知らせください。",
+  },
+  {
+    value: "寄稿",
+    help: "寄稿や情報提供のご相談はこちらをお選びください。テーマ、略歴、参考資料がある場合は本文に概要を記載ください。",
+  },
+  {
+    value: "その他",
+    help: "上記に当てはまらないお問い合わせはこちらをお選びください。内容を確認のうえ、必要に応じて返信します。",
+  },
+];
+---
+
+<BaseLayout
+  title="お問い合わせ | Dig&Build"
+  description="Dig&Buildへの取材依頼、広告掲載、寄稿、その他のお問い合わせはこちらからご連絡ください。"
+  showContactCTA={false}
+>
+  <article class="contact-page">
+    <header class="contact-page__hero">
+      <p class="contact-page__eyebrow">Contact</p>
+      <h1 class="contact-page__title">お問い合わせ</h1>
+      <p class="contact-page__lead">
+        内容を確認のうえ、通常3営業日以内にご連絡いたします。
+      </p>
+    </header>
+
+    <div class="contact-page__body">
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="contact-form__grid">
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="name">お名前<span>必須</span></label>
+            <input id="name" class="contact-form__input" name="name" type="text" maxlength="80" autocomplete="name" required />
+          </div>
+
+          <div class="contact-form__field">
+            <label class="contact-form__label" for="email">メールアドレス<span>必須</span></label>
+            <input id="email" class="contact-form__input" name="email" type="email" maxlength="254" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="organization">所属・会社名</label>
+          <input id="organization" class="contact-form__input" name="organization" type="text" maxlength="120" autocomplete="organization" />
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="inquiryType">問い合わせ項目<span>必須</span></label>
+          <div class="contact-form__select-wrap">
+            <select id="inquiryType" class="contact-form__select" name="inquiryType" required>
+              {
+                inquiryOptions.map((option) => (
+                  <option value={option.value}>{option.value}</option>
+                ))
+              }
+            </select>
+            <span class="contact-form__select-arrow" aria-hidden="true">↓</span>
+          </div>
+          <div class="contact-form__help-list">
+            {
+              inquiryOptions.map((option, index) => (
+                <p class="contact-form__help" data-inquiry-help={option.value} hidden={index !== 0}>
+                  {option.help}
+                </p>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="subject">件名<span>必須</span></label>
+          <input id="subject" class="contact-form__input" name="subject" type="text" maxlength="120" required />
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="message">お問い合わせ内容<span>必須</span></label>
+          <textarea id="message" class="contact-form__textarea" name="message" maxlength="4000" rows="9" required></textarea>
+        </div>
+
+        <div class="contact-form__honeypot" aria-hidden="true">
+          <label for="website">Webサイト</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p id="contact-form-status" class="contact-form__status" aria-live="polite"></p>
+
+        <button class="contact-form__submit" type="submit">
+          <span class="contact-form__submit-idle">送信する</span>
+          <span class="contact-form__submit-loading" aria-hidden="true">
+            <span class="contact-form__spinner"></span>
+            <span>送信中</span>
+          </span>
+        </button>
+      </form>
+    </div>
+  </article>
+
+  <script is:inline>
+    (() => {
+      const form = document.querySelector("#contact-form");
+      const status = document.querySelector("#contact-form-status");
+      const inquiryType = document.querySelector("#inquiryType");
+      const helpItems = document.querySelectorAll("[data-inquiry-help]");
+
+      if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement) || !(inquiryType instanceof HTMLSelectElement)) {
+        return;
+      }
+
+      const setStatus = (message, type) => {
+        status.textContent = message;
+        status.dataset.status = type;
+      };
+
+      const setSubmitting = (isSubmitting) => {
+        form.dataset.submitting = String(isSubmitting);
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = isSubmitting;
+        }
+      };
+
+      const updateInquiryHelp = () => {
+        helpItems.forEach((item) => {
+          item.hidden = item.getAttribute("data-inquiry-help") !== inquiryType.value;
+        });
+      };
+
+      inquiryType.addEventListener("change", updateInquiryHelp);
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (form.dataset.submitting === "true") return;
+
+        setStatus("", "");
+
+        if (!form.reportValidity()) {
+          setStatus("入力内容をご確認ください。", "error");
+          return;
+        }
+
+        const formData = new FormData(form);
+        const payload = {
+          name: String(formData.get("name") ?? ""),
+          email: String(formData.get("email") ?? ""),
+          organization: String(formData.get("organization") ?? ""),
+          inquiryType: String(formData.get("inquiryType") ?? ""),
+          subject: String(formData.get("subject") ?? ""),
+          message: String(formData.get("message") ?? ""),
+          website: String(formData.get("website") ?? ""),
+        };
+
+        setSubmitting(true);
+        setStatus("送信しています。", "loading");
+
+        try {
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json().catch(() => null);
+
+          if (!response.ok || !result?.ok) {
+            setStatus(result?.message || "送信に失敗しました。時間をおいて再度お試しください。", "error");
+            return;
+          }
+
+          form.reset();
+          updateInquiryHelp();
+          setStatus("お問い合わせを送信しました。内容を確認のうえ、必要に応じて返信します。", "success");
+        } catch {
+          setStatus("通信に失敗しました。時間をおいて再度お試しください。", "error");
+        } finally {
+          setSubmitting(false);
+        }
+      });
+    })();
+  </script>
+</BaseLayout>
+
+<style lang="scss">
+  @use "@/styles/design-tokens.scss" as *;
+
+  .contact-page {
+    color: $color-text;
+  }
+
+  .contact-page__hero {
+    margin: 0 auto;
+    padding: clamp(72px, 10vw, 136px) $gutter $space-7;
+    max-width: $content-max;
+  }
+
+  .contact-page__eyebrow {
+    margin: 0 0 $space-3;
+    font-family: $font-display;
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: $lh-ui;
+    letter-spacing: 0.2em;
+    color: $color-muted;
+  }
+
+  .contact-page__title {
+    margin: 0;
+    font-family: $font-serif;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: $tracking;
+    color: $color-engi;
+  }
+
+  .contact-page__lead {
+    margin: $space-5 0 0;
+    font-family: $font-serif;
+    font-size: clamp(1.08rem, 1.5vw, 20px);
+    font-weight: 600;
+    line-height: 1.95;
+    letter-spacing: 0.04em;
+    color: $color-accent;
+  }
+
+  .contact-page__body {
+    margin: 0 auto;
+    padding: 0 $gutter $space-10;
+    max-width: $content-max;
+  }
+
+  .contact-form {
+    padding-top: $space-6;
+    display: grid;
+    gap: $space-5;
+    border-top: 1px solid $color-engi;
+  }
+
+  .contact-form__status {
+    margin: 0;
+    min-height: 1.5em;
+    font-family: $font-sans;
+    font-size: $fs-small;
+    line-height: $lh-ui;
+    letter-spacing: 0.04em;
+    color: $color-muted;
+  }
+
+  .contact-form__status[data-status="success"] {
+    color: $color-engi;
+  }
+
+  .contact-form__status[data-status="error"] {
+    color: $color-engi-deep;
+  }
+
+  .contact-form__grid {
+    display: grid;
+    gap: $space-5;
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form__field {
+    display: grid;
+    gap: $space-2;
+  }
+
+  .contact-form__label {
+    display: flex;
+    align-items: baseline;
+    gap: $space-2;
+    font-family: $font-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: $lh-ui;
+    letter-spacing: 0.08em;
+    color: $color-accent;
+  }
+
+  .contact-form__label span {
+    font-family: $font-sans;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: $color-engi;
+  }
+
+  .contact-form__input,
+  .contact-form__select,
+  .contact-form__textarea {
+    padding: 15px 16px;
+    width: 100%;
+    font-family: $font-sans;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: $color-text;
+    background-color: rgb(255 255 255 / 62%);
+    border: 1px solid #d2c6ba;
+    border-radius: 0;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 54%);
+    transition:
+      border-color $dur-1 $ease,
+      background-color $dur-1 $ease,
+      box-shadow $dur-1 $ease;
+  }
+
+  .contact-form__input:focus,
+  .contact-form__select:focus,
+  .contact-form__textarea:focus {
+    background-color: rgb(255 255 255 / 82%);
+    border-color: $color-engi;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 70%),
+      0 0 0 3px rgb(107 31 36 / 12%);
+    outline: none;
+  }
+
+  .contact-form__input:hover,
+  .contact-form__textarea:hover {
+    border-color: $color-engi;
+  }
+
+  .contact-form__select-wrap {
+    position: relative;
+    max-width: 340px;
+  }
+
+  .contact-form__select {
+    padding-right: 64px;
+    cursor: pointer;
+    appearance: none;
+  }
+
+  .contact-form__select-wrap:hover .contact-form__select {
+    border-color: $color-engi;
+  }
+
+  .contact-form__select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 9px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $font-serif;
+    font-size: 16px;
+    line-height: 1;
+    color: $color-engi-ink;
+    background-color: $color-engi;
+    border-radius: 50%;
+    transform: translateY(-50%) scale(0.8);
+    transition:
+      font-size $dur-2 $ease,
+      transform $dur-2 $ease;
+    pointer-events: none;
+  }
+
+  .contact-form__select-wrap:hover .contact-form__select-arrow {
+    font-size: 18px;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .contact-form__textarea {
+    min-height: 240px;
+    resize: vertical;
+  }
+
+  .contact-form__help-list {
+    min-height: 4.6em;
+  }
+
+  .contact-form__help {
+    margin: $space-2 0 0;
+    font-family: $font-serif;
+    font-size: $fs-small;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    color: $color-muted;
+  }
+
+  .contact-form__honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact-form__submit {
+    padding: 18px 34px;
+    min-width: 180px;
+    min-height: 57px;
+    display: inline-flex;
+    justify-content: center;
+    justify-self: start;
+    align-items: center;
+    gap: $space-3;
+    font-family: $font-display;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    color: $color-engi-ink;
+    background-color: $color-engi;
+    border: 0;
+    border-radius: 0;
+    transition:
+      background-color $dur-1 $ease,
+      border-radius 300ms ease-in-out,
+      opacity $dur-1 $ease;
+    cursor: pointer;
+  }
+
+  .contact-form__submit:hover:not(:disabled) {
+    background-color: $color-engi-soft;
+    border-radius: 30px;
+  }
+
+  .contact-form__submit:disabled {
+    opacity: 0.78;
+    cursor: progress;
+  }
+
+  .contact-form__submit-loading {
+    display: none;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  .contact-form[data-submitting="true"] .contact-form__submit-idle {
+    display: none;
+  }
+
+  .contact-form[data-submitting="true"] .contact-form__submit-loading {
+    display: inline-flex;
+  }
+
+  .contact-form__spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgb(245 238 230 / 35%);
+    border-top-color: $color-engi-ink;
+    border-radius: 50%;
+    animation: contact-spinner 800ms linear infinite;
+  }
+
+  @keyframes contact-spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-form__spinner {
+      animation: none;
+    }
+  }
+
+  @media (width <= 768px) {
+    .contact-form__select-wrap {
+      max-width: none;
+    }
+
+    .contact-form__submit {
+      width: 100%;
+    }
+  }
+</style>

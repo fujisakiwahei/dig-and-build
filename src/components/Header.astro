@@ -27,7 +27,7 @@ const LogoElement = currentPath === "/" ? "h1" : "p";
       }
     </ul>
 
-    <a class="site-header__cta" target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/1dYl56EHVK--TAY-Zd4GTJ_to_TVBcl3umoJiZbq6xWw/edit?hl=ja">問い合わせる</a>
+    <a class:list={["site-header__cta", currentPath.startsWith("/contact/") && "is-active"]} href="/contact/">問い合わせる</a>
   </nav>
 </header>
 
@@ -109,7 +109,8 @@ const LogoElement = currentPath === "/" ? "h1" : "p";
       box-shadow $dur-1 $ease;
     flex-shrink: 0;
 
-    &:hover {
+    &:hover,
+    &.is-active {
       background-color: $color-engi-soft;
       border-radius: 20px;
     }
