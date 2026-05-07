@@ -28,7 +28,7 @@ microCMSによりコンテンツ管理のしやすさを保ちながら、WordPr
 
 問い合わせ機能も外部フォームサービスに依存せず、Vercel Functions 上に自前実装しています。送信には Resend を使い、フォーム入力の検証、bot 対策、運営通知、自動返信までを含めています。
 
-## Tech Stack
+## 技術スタック
 
 - Astro
 - TypeScript
@@ -39,16 +39,3 @@ microCMSによりコンテンツ管理のしやすさを保ちながら、WordPr
 - Cloudflare Turnstile
 - Astro Sitemap
 - GA4
-
-## Development
-
-```sh
-pnpm install
-pnpm run dev
-```
-
-本番ビルドは microCMS から記事データを取得するため、`MICROCMS_SERVICE_DOMAIN` と `MICROCMS_API_KEY` が必要です。
-
-```sh
-pnpm run build
-```
